@@ -1,0 +1,36 @@
+{
+  "projectTitle": "The Invisible Cut",
+  "formatClass": "SHORT_FORM_MANIFESTO",
+  "frameZeroStrategy": "Start in-medias-res on Frame 0 with razor splice line already bisecting the canvas at x=0.36, active 60ms tabular counter running, and headline 80% unmasked.",
+  "tripleLockHook0to3s": {
+    "visual": "High-contrast surgical cyan laser splice + masked Swiss editorial headline",
+    "auditory": "Crisp micro-click transient on Frame 2 + immediate authoritative narrator entry",
+    "semantic": "Challenges the viewer's assumption about editing ('You never notice a great cut...')"
+  },
+  "zeigarnikLoops": [
+    {
+      "loopId": "L1",
+      "openedAtSec": 0.4,
+      "question": "If editing isn't software, what makes a cut invisible?",
+      "closedAtSec": 7.5
+    },
+    {
+      "loopId": "L2",
+      "openedAtSec": 7.2,
+      "question": "Once the eye is locked, how do you stop attention from shattering?",
+      "closedAtSec": 12.8
+    },
+    {
+      "loopId": "L3",
+      "openedAtSec": 13.0,
+      "question": "What happens when accelerating rhythm hits dead silence?",
+      "closedAtSec": 18.2
+    }
+  ],
+  "patternInterruptCadence": {
+    "targetMicroShiftSec": 2.3,
+    "targetMacroResetSec": 11.0,
+    "prePayoffSilenceDropFrames": 14
+  },
+  "mayersCognitiveLoadPolicy": "Suppress word-by-word bottom captions on diagram scenes (S02, S03, S04) where semantic labels and telemetry already occupy visual reading bandwidth."
+}

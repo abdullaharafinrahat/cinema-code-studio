@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cinema-code-studio.local/schemas/timeline.schema.json",
+  "title": "CinemaCodeStudioMasterTimeline",
+  "description": "Gate 5 Frame-Accurate Edit Decision List consumed by Remotion MasterSequence and FFmpeg Mastering.",
+  "type": "object",
+  "required": ["meta", "scenes"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["title", "fps", "width", "height", "visualWorld"],
+      "properties": {
+        "title": { "type": "string" },
+        "fps": { "type": "integer", "enum": [24, 25, 30, 60] },
+        "width": { "type": "integer" },
+        "height": { "type": "integer" },
+        "visualWorld": { "type": "string" },
+        "grainOpacity": { "type": "number", "minimum": 0, "maximum": 0.15, "default": 0.035 },
+        "vignetteStrength": { "type": "number", "minimum": 0, "maximum": 0.5, "default": 0.14 }
+      }
+    },
+    "audioTracks": {
+      "type": "object",
+      "properties": {
+        "voiceoverSrc": { "type": "string" },
+        "musicBedSrc": { "type": "string" },
+        "musicBaseGainDb": { "type": "number", "default": -14 },
+        "duckingAmountDb": { "type": "number", "default": -9 },
+        "silenceDrops": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["startFrame", "durationFrames", "reason"],
+            "properties": {
+              "startFrame": { "type": "integer", "minimum": 0 },
+              "durationFrames": { "type": "integer", "minimum": 4, "maximum": 45 },
+              "reason": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "shotId", "durationInFrames", "kind"],
+        "properties": {
+          "id": { "type": "string" },
+          "shotId": { "type": "string" },
+          "durationInFrames": { "type": "integer", "minimum": 12 },
+          "kind": {
+            "type": "string",
+            "enum": ["FOOTAGE", "MOTION_SCENE", "HYBRID_COMPOSITE"]
+          },
+          "component": { "type": "string" },
+          "props": { "type": "object" },
+          "footage": {
+            "type": "object",
+            "properties": {
+              "src": { "type": "string" },
+              "trimBeforeFrames": { "type": "integer", "minimum": 0 },
+              "scale": { "type": "number", "default": 1.0 },
+              "anchorEye": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": { "type": "number" }
+              },
+              "jCutLeadFrames": { "type": "integer", "default": 0 },
+              "lCutTrailFrames": { "type": "integer", "default": 0 }
+            }
+          },
+          "gradeMood": {
+            "type": "object",
+            "properties": {
+              "paletteId": { "type": "string" },
+              "saturation": { "type": "number", "default": 1.0 },
+              "contrast": { "type": "number", "default": 1.04 },
+              "temperatureShift": { "type": "number", "default": 0.0 }
+            }
+          },
+          "captionsActive": { "type": "boolean", "default": true },
+          "transitionAfter": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["none", "wipe-right", "wipe-up", "fade", "camera-push"]
+              },
+              "durationInFrames": { "type": "integer", "minimum": 0, "maximum": 40 }
+            }
+          }
+        }
+      }
+    },
+    "captions": {
+      "type": "object",
+      "properties": {
+        "wordsFile": { "type": "string" },
+        "style": { "type": "string", "enum": ["editorial-clean", "kinetic-pop", "minimal-lower"] }
+      }
+    }
+  }
+}

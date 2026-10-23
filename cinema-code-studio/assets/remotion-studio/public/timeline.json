@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "title": "Cinema Code Studio Reference Reel",
+    "fps": 60,
+    "width": 1920,
+    "height": 1080,
+    "visualWorld": "SWISS_EDITORIAL_DARK",
+    "grainOpacity": 0.035,
+    "vignetteStrength": 0.14
+  },
+  "audioTracks": {
+    "musicBaseGainDb": -14,
+    "duckingAmountDb": -9,
+    "silenceDrops": [
+      {
+        "startFrame": 348,
+        "durationFrames": 12,
+        "reason": "Pre-payoff silence drop before +340% throughput reveal"
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_01_hook",
+      "shotId": "S01",
+      "durationInFrames": 156,
+      "kind": "MOTION_SCENE",
+      "archetype": "HERO_STATEMENT",
+      "props": {
+        "eyebrow": "01 / EDITORIAL ARCHITECTURE",
+        "lines": ["Every Cut Is Psychology,", "Not Software."],
+        "accentWord": "Psychology,",
+        "subcaption": "Frame-0 in-medias-res lock with perceptual OKLCH contrast."
+      },
+      "gradeMood": {
+        "paletteId": "SWISS_EDITORIAL_DARK",
+        "contrast": 1.04,
+        "temperatureShift": -0.15
+      },
+      "captionsActive": false,
+      "transitionAfter": {
+        "type": "wipe-right",
+        "durationInFrames": 14
+      }
+    },
+    {
+      "id": "scene_02_evidence",
+      "shotId": "S02",
+      "durationInFrames": 220,
+      "kind": "MOTION_SCENE",
+      "archetype": "COMPARATIVE_BARS",
+      "props": {
+        "eyebrow": "02 / COGNITIVE CLARITY",
+        "lines": ["60-30-10 Focal Hierarchy"],
+        "accentWord": "60-30-10",
+        "bars": [
+          { "label": "Manual GUI Timeline Iteration", "value": 48, "unit": "min", "isHero": false },
+          { "label": "Deterministic Code Pipeline", "value": 4, "unit": "min", "isHero": true }
+        ]
+      },
+      "gradeMood": {
+        "paletteId": "SWISS_EDITORIAL_DARK",
+        "contrast": 1.05,
+        "temperatureShift": 0.0
+      },
+      "captionsActive": false,
+      "transitionAfter": {
+        "type": "fade",
+        "durationInFrames": 12
+      }
+    },
+    {
+      "id": "scene_03_payoff",
+      "shotId": "S03",
+      "durationInFrames": 210,
+      "kind": "MOTION_SCENE",
+      "archetype": "METRIC_PROOF",
+      "props": {
+        "metricPrefix": "+",
+        "metricValue": 340,
+        "metricSuffix": "%",
+        "lines": ["Audience Retention Velocity"],
+        "subcaption": "Measured across hook survival, eye-trace continuity & -14 LUFS mix"
+      },
+      "gradeMood": {
+        "paletteId": "PRECISION_CINEMA_LAB",
+        "contrast": 1.06,
+        "temperatureShift": 0.25
+      },
+      "captionsActive": false,
+      "transitionAfter": {
+        "type": "none",
+        "durationInFrames": 0
+      }
+    }
+  ]
+}

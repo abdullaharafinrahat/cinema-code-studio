@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cinema-code-studio.local/schemas/storyboard.schema.json",
+  "title": "CinemaCodeStudioStoryboard",
+  "description": "Gate 4 Master Storyboard encoding shot scale, composition grid, eye-trace coordinates, camera motivation, and cognitive load.",
+  "type": "object",
+  "required": ["projectTitle", "aspectRatio", "fps", "shots"],
+  "properties": {
+    "projectTitle": { "type": "string" },
+    "aspectRatio": { "type": "string", "enum": ["16:9", "9:16", "1:1", "4:5"] },
+    "fps": { "type": "integer", "enum": [24, 25, 30, 60] },
+    "shots": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "shotId",
+          "startSec",
+          "endSec",
+          "narrativeBeat",
+          "shotScale",
+          "compositionGrid",
+          "entryFocalPoint",
+          "exitFocalPoint",
+          "visualDescription",
+          "audioScript",
+          "onScreenWordCount",
+          "cognitiveLoadScore",
+          "captionsActive",
+          "cameraMove",
+          "transitionOut"
+        ],
+        "properties": {
+          "shotId": { "type": "string", "pattern": "^S[0-9]{2,3}$" },
+          "startSec": { "type": "number", "minimum": 0 },
+          "endSec": { "type": "number", "exclusiveMinimum": 0 },
+          "narrativeBeat": {
+            "type": "string",
+            "enum": ["HOOK", "SETUP", "TENSION", "EVIDENCE", "REHOOK", "PAYOFF", "CTA"]
+          },
+          "shotScale": {
+            "type": "string",
+            "enum": ["ECU", "CU", "MS", "WS", "EWS"]
+          },
+          "compositionGrid": {
+            "type": "string",
+            "enum": ["CENTER_PUNCH", "RULE_OF_THIRDS", "ASYMMETRIC_EDITORIAL", "VERTICAL_SAFE_STACK"]
+          },
+          "entryFocalPoint": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": { "type": "number", "minimum": 0, "maximum": 1 }
+          },
+          "exitFocalPoint": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": { "type": "number", "minimum": 0, "maximum": 1 }
+          },
+          "colorMoodId": { "type": "string" },
+          "paletteHexPreview": {
+            "type": "object",
+            "properties": {
+              "bg": { "type": "string" },
+              "surface": { "type": "string" },
+              "hero": { "type": "string" },
+              "text": { "type": "string" }
+            }
+          },
+          "visualDescription": { "type": "string", "minLength": 5 },
+          "audioScript": { "type": "string" },
+          "onScreenWordCount": { "type": "integer", "minimum": 0 },
+          "cognitiveLoadScore": { "type": "integer", "minimum": 1, "maximum": 3 },
+          "captionsActive": { "type": "boolean" },
+          "cameraMove": {
+            "type": "object",
+            "required": ["type", "motivation"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "STATIC_BREATH",
+                  "DOLLY_IN_INTIMATE",
+                  "PULL_BACK_REVEAL",
+                  "LATERAL_TRACK",
+                  "RACK_FOCUS_Z"
+                ]
+              },
+              "motivation": { "type": "string", "minLength": 3 }
+            }
+          },
+          "transitionOut": {
+            "type": "object",
+            "required": ["type", "durationFrames"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "HARD_CUT",
+                  "J_CUT",
+                  "L_CUT",
+                  "MATCH_CUT",
+                  "DIRECTIONAL_WIPE",
+                  "CAMERA_PAN"
+                ]
+              },
+              "durationFrames": { "type": "integer", "minimum": 0, "maximum": 45 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "projectTitle": "The Invisible Cut",
+  "targetAudience": "Creators, filmmakers, and engineers exploring code-driven cinema",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "targetDurationSec": 23
+  },
+  "emotionalArc": {
+    "fromState": "Intrigue — questioning why great film cuts feel invisible to the conscious mind",
+    "tensionState": "Sensory tension — feeling the visual chaos of broken eye-trace and competing brightness before order snaps in",
+    "toState": "Cinematic awe — visceral payoff as silence, warm gold color shift, and precision typography lock together",
+    "coreThesis": "Great editing is not timeline software; it is deterministic human perception, color hierarchy, and acoustic restraint."
+  },
+  "visualWorld": "SWISS_EDITORIAL_DARK",
+  "kuleshovStrategy": "Never show film-reel or scissors clipart. Visualize the actual physics of perception: a 60ms foveal reticle jumping vs locking, 4 competing cards dimming into a 60-30-10 OKLCH prism, and a live acoustic waveform flatlining into dead silence right before the gold climax.",
+  "typography": {
+    "displayFont": "Inter",
+    "utilityFont": "JetBrains Mono",
+    "tabularNumerals": true
+  },
+  "antiGoals": [
+    "Zero fade-from-black on Frame 0 (start mid-slice at full contrast)",
+    "Zero literal video-editing icons (no clapperboards, film strips, or scissors)",
+    "Zero raw #FFFFFF highlights or uniform scene durations",
+    "Zero bottom subtitle collisions over multi-element visual diagrams"
+  ]
+}

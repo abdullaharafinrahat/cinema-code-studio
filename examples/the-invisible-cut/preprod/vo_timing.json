@@ -1,0 +1,38 @@
+{
+  "vo_s01": {
+    "trimmedDurSec": 7.16,
+    "startSec": 0.12,
+    "midSplitSec": 1.96,
+    "endSec": 7.28,
+    "afterGapSec": 0.22
+  },
+  "vo_s02": {
+    "trimmedDurSec": 7.5,
+    "startSec": 7.5,
+    "midSplitSec": 9.62,
+    "endSec": 15.0,
+    "afterGapSec": 0.24
+  },
+  "vo_s03": {
+    "trimmedDurSec": 8.74,
+    "startSec": 15.24,
+    "midSplitSec": 21.6,
+    "endSec": 23.98,
+    "afterGapSec": 0.22
+  },
+  "vo_s04": {
+    "trimmedDurSec": 5.92,
+    "startSec": 24.2,
+    "midSplitSec": 26.38,
+    "endSec": 30.12,
+    "afterGapSec": 0.52
+  },
+  "vo_s05": {
+    "trimmedDurSec": 4.74,
+    "startSec": 30.64,
+    "midSplitSec": 33.42,
+    "endSec": 35.38,
+    "afterGapSec": 1.15
+  },
+  "totalMasterSec": 36.53
+}

@@ -1,0 +1,35 @@
+{
+  "projectTitle": "Cinema Code Studio Reference Reel",
+  "moods": [
+    {
+      "id": "ACT1_GRAPHITE_BRASS",
+      "narrativeRole": "Hook & Proof — warm matte carbon with aged Kodak brass 10% focal accent",
+      "colors": {
+        "dominantBg": "#141311",
+        "secondarySurface": "#201E1B",
+        "primaryText": "#EDE7DA",
+        "heroAccent": "#C8963E"
+      },
+      "pixelRatio": {
+        "dominant": 60,
+        "secondary": 30,
+        "accent": 10
+      }
+    },
+    {
+      "id": "ACT3_TERRACOTTA_BONE",
+      "narrativeRole": "Tactile Editorial Payoff — warm unbleached museum stock with Braun terracotta accent",
+      "colors": {
+        "dominantBg": "#EFE9DD",
+        "secondarySurface": "#E3DCCD",
+        "primaryText": "#181613",
+        "heroAccent": "#B8432A"
+      },
+      "pixelRatio": {
+        "dominant": 62,
+        "secondary": 28,
+        "accent": 10
+      }
+    }
+  ]
+}

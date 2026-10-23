@@ -1,0 +1,22 @@
+{
+  "project": "The Invisible Cut",
+  "fps": 60,
+  "cues": [
+    { "frame": 2, "file": "micro-click.wav", "gainDb": -11.0, "note": "Frame-2 razor splice lock" },
+    { "frame": 114, "file": "airy-whoosh.wav", "gainDb": -12.0, "note": "S01->S02 directional wipe sweep" },
+    { "frame": 215, "file": "soft-pop.wav", "gainDb": -11.5, "note": "60ms perception ring lock" },
+    { "frame": 444, "file": "micro-click.wav", "gainDb": -10.5, "note": "S03 saccade grid jump 1" },
+    { "frame": 518, "file": "micro-click.wav", "gainDb": -10.5, "note": "S03 saccade grid jump 2" },
+    { "frame": 672, "file": "sub-impact.wav", "gainDb": -9.5, "note": "S04 foveal gaze lock & world fusion" },
+    { "frame": 676, "file": "soft-pop.wav", "gainDb": -11.0, "note": "S04 green seamless badge snap" },
+    { "frame": 1161, "file": "airy-whoosh.wav", "gainDb": -11.5, "note": "S06 90% shadow discipline sweep" },
+    { "frame": 1185, "file": "soft-pop.wav", "gainDb": -10.5, "note": "S06 10% hero prism activation" },
+    { "frame": 1443, "file": "airy-whoosh.wav", "gainDb": -11.5, "note": "S06->S07 vertical wipe" },
+    { "frame": 1495, "file": "micro-click.wav", "gainDb": -11.5, "note": "S07 staccato rhythm tick 1" },
+    { "frame": 1545, "file": "micro-click.wav", "gainDb": -11.0, "note": "S07 staccato rhythm tick 2" },
+    { "frame": 1585, "file": "micro-click.wav", "gainDb": -10.5, "note": "S07 staccato rhythm tick 3" },
+    { "frame": 1736, "file": "tension-riser.wav", "gainDb": -9.0, "note": "1.15s swell ending cleanly at f=1805 before silence vacuum!" },
+    { "frame": 1838, "file": "sub-impact.wav", "gainDb": -6.5, "note": "S09 Post-silence Cinema Gold climax impact!" },
+    { "frame": 1995, "file": "soft-pop.wav", "gainDb": -12.0, "note": "Cinema by design final subtitle lock" }
+  ]
+}

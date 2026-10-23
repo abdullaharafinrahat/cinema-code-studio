@@ -1,0 +1,97 @@
+{
+  "projectTitle": "Cinema Code Studio Reference Reel",
+  "aspectRatio": "16:9",
+  "fps": 60,
+  "shots": [
+    {
+      "shotId": "S01",
+      "startSec": 0.0,
+      "endSec": 2.6,
+      "narrativeBeat": "HOOK",
+      "shotScale": "CU",
+      "compositionGrid": "RULE_OF_THIRDS",
+      "entryFocalPoint": [0.34, 0.44],
+      "exitFocalPoint": [0.38, 0.44],
+      "colorMoodId": "ACT1_GRAPHITE_BRASS",
+      "paletteHexPreview": {
+        "bg": "#141311",
+        "surface": "#201E1B",
+        "hero": "#C8963E",
+        "text": "#EDE7DA"
+      },
+      "visualDescription": "In-medias-res masked Swiss headline on warm matte carbon; aged brass focal rule at right third.",
+      "audioScript": "Every great cut is human psychology—never the software.",
+      "onScreenWordCount": 6,
+      "cognitiveLoadScore": 1,
+      "captionsActive": false,
+      "cameraMove": {
+        "type": "DOLLY_IN_INTIMATE",
+        "motivation": "Pull viewer immediately into thesis tension"
+      },
+      "transitionOut": {
+        "type": "DIRECTIONAL_WIPE",
+        "durationFrames": 14
+      }
+    },
+    {
+      "shotId": "S02",
+      "startSec": 2.6,
+      "endSec": 6.26,
+      "narrativeBeat": "EVIDENCE",
+      "shotScale": "MS",
+      "compositionGrid": "ASYMMETRIC_EDITORIAL",
+      "entryFocalPoint": [0.42, 0.48],
+      "exitFocalPoint": [0.50, 0.50],
+      "colorMoodId": "ACT1_GRAPHITE_BRASS",
+      "paletteHexPreview": {
+        "bg": "#141311",
+        "surface": "#201E1B",
+        "hero": "#C8963E",
+        "text": "#EDE7DA"
+      },
+      "visualDescription": "Muted pewter baseline bar settles at 48 min while matte aged-brass hero bar locks at 4 min.",
+      "audioScript": "When structure, eye-trace, and 60-30-10 color are mathematical, iteration drops tenfold.",
+      "onScreenWordCount": 9,
+      "cognitiveLoadScore": 2,
+      "captionsActive": false,
+      "cameraMove": {
+        "type": "LATERAL_TRACK",
+        "motivation": "Follow horizontal bar progression toward centered payoff"
+      },
+      "transitionOut": {
+        "type": "HARD_CUT",
+        "durationFrames": 0
+      }
+    },
+    {
+      "shotId": "S03",
+      "startSec": 6.26,
+      "endSec": 9.76,
+      "narrativeBeat": "PAYOFF",
+      "shotScale": "CU",
+      "compositionGrid": "CENTER_PUNCH",
+      "entryFocalPoint": [0.50, 0.46],
+      "exitFocalPoint": [0.50, 0.46],
+      "colorMoodId": "ACT3_TERRACOTTA_BONE",
+      "paletteHexPreview": {
+        "bg": "#EFE9DD",
+        "surface": "#E3DCCD",
+        "hero": "#B8432A",
+        "text": "#181613"
+      },
+      "visualDescription": "After 12-frame silence drop, polarity inverts to warm museum paper (#EFE9DD) with Braun terracotta +340% focal print.",
+      "audioScript": "Delivering three hundred forty percent stronger audience retention.",
+      "onScreenWordCount": 4,
+      "cognitiveLoadScore": 1,
+      "captionsActive": false,
+      "cameraMove": {
+        "type": "STATIC_BREATH",
+        "motivation": "Deliberate breath hold letting thesis payoff land with authority"
+      },
+      "transitionOut": {
+        "type": "HARD_CUT",
+        "durationFrames": 0
+      }
+    }
+  ]
+}

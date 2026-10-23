@@ -1,0 +1,41 @@
+{
+  "kit": "cinema-code-studio-psychoacoustic-v2",
+  "license": "CC0-Procedural",
+  "sounds": [
+    {
+      "file": "micro-click.wav",
+      "durationSec": 0.038,
+      "sampleRate": 48000,
+      "recommendedLeadFramesAt60Fps": 0,
+      "usage": "High transient click for cursors, ticks, and toggles"
+    },
+    {
+      "file": "soft-pop.wav",
+      "durationSec": 0.11,
+      "sampleRate": 48000,
+      "recommendedLeadFramesAt60Fps": 0,
+      "usage": "Warm mid-transient settle for badges and callout cards"
+    },
+    {
+      "file": "airy-whoosh.wav",
+      "durationSec": 0.34,
+      "sampleRate": 48000,
+      "recommendedLeadFramesAt60Fps": -10,
+      "usage": "Stereo swept air whoosh; peak sits at 0.17s (start ~6-10 frames early)"
+    },
+    {
+      "file": "sub-impact.wav",
+      "durationSec": 0.68,
+      "sampleRate": 48000,
+      "recommendedLeadFramesAt60Fps": 0,
+      "usage": "Deep 38Hz sub-bass drop for macro title locks and polarity flips"
+    },
+    {
+      "file": "tension-riser.wav",
+      "durationSec": 1.15,
+      "sampleRate": 48000,
+      "recommendedLeadFramesAt60Fps": -69,
+      "usage": "1.15s harmonic tension swell; end 2-8 frames before payoff reveal"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "status": "ok",
+  "screeningSheet": "/home/user/sample-film/preprod/qa-screening-sheet.png",
+  "framesEvaluated": [
+    {
+      "frame": 0,
+      "label": "FRAME_0_HOOK",
+      "shotId": "S01",
+      "timeSec": 0.0,
+      "meanLuma": 0.101,
+      "contrastStd": 0.114,
+      "clippedWhitePct": 0.0,
+      "nearBlackPct": 0.0
+    },
+    {
+      "frame": 63,
+      "label": "S01_SETTLED",
+      "shotId": "S01",
+      "timeSec": 1.05,
+      "meanLuma": 0.101,
+      "contrastStd": 0.115,
+      "clippedWhitePct": 0.0,
+      "nearBlackPct": 0.0
+    },
+    {
+      "frame": 126,
+      "label": "S01_TRANS",
+      "shotId": "S01",
+      "timeSec": 2.1,
+      "meanLuma": 0.087,
+      "contrastStd": 0.049,
+      "clippedWhitePct": 0.0,
+      "nearBlackPct": 0.0
+    },
+    {
+      "frame": 275,
+      "label": "S02_SETTLED",
+      "shotId": "S02",
+      "timeSec": 4.58,
+      "meanLuma": 0.108,
+      "contrastStd": 0.126,
+      "clippedWhitePct": 0.0,
+      "nearBlackPct": 0.0
+    },
+    {
+      "frame": 553,
+      "label": "S03_SETTLED",
+      "shotId": "S03",
+      "timeSec": 9.22,
+      "meanLuma": 0.101,
+      "contrastStd": 0.075,
+      "clippedWhitePct": 0.0,
+      "nearBlackPct": 0.0
+    },
+    {
+      "frame": 792,
+      "label": "S04_SETTLED",
+      "shotId": "S04",
+      "timeSec": 13.2,
+      "meanLuma": 0.095,
+      "contrastStd": 0.102,
+      "clippedWhitePct": 0.0,
+      "nearBlackPct": 0.0
+    },
+    {
+      "frame": 1029,
+      "label": "S05_SETTLED",
+      "shotId": "S05",
+      "timeSec": 17.15,
+      "meanLuma": 0.322,
+      "contrastStd": 0.362,
+      "clippedWhitePct": 0.0,
+      "nearBlackPct": 0.0
+    },
+    {
+      "frame": 1305,
+      "label": "S06_SETTLED",
+      "shotId": "S06",
+      "timeSec": 21.75,
+      "meanLuma": 0.1,
+      "contrastStd": 0.103,
+      "clippedWhitePct": 0.0,
+      "nearBlackPct": 0.0
+    },
+    {
+      "frame": 1455,
+      "label": "S06_TRANS",
+      "shotId": "S06",
+      "timeSec": 24.25,
+      "meanLuma": 0.101,
+      "contrastStd": 0.091,
+      "clippedWhitePct": 0.0,
+      "nearBlackPct": 0.0
+    },
+    {
+      "frame": 1532,
+      "label": "S07_SETTLED",
+      "shotId": "S07",
+      "timeSec": 25.53,
+      "meanLuma": 0.109,
+      "contrastStd": 0.116,
+      "clippedWhitePct": 0.0,
+      "nearBlackPct": 0.0
+    },
+    {
+      "frame": 1726,
+      "label": "S08_SETTLED",
+      "shotId": "S08",
+      "timeSec": 28.77,
+      "meanLuma": 0.068,
+      "contrastStd": 0.057,
+      "clippedWhitePct": 0.0,
+      "nearBlackPct": 0.0
+    },
+    {
+      "frame": 2007,
+      "label": "S09_SETTLED",
+      "shotId": "S09",
+      "timeSec": 33.45,
+      "meanLuma": 0.869,
+      "contrastStd": 0.13,
+      "clippedWhitePct": 0.0,
+      "nearBlackPct": 0.0
+    }
+  ]
+}

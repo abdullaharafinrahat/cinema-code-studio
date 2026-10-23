@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "title": "The Invisible Cut",
+    "fps": 60,
+    "width": 1920,
+    "height": 1080,
+    "visualWorld": "SWISS_EDITORIAL_DARK",
+    "grainOpacity": 0.038,
+    "vignetteStrength": 0.14
+  },
+  "audioTracks": {
+    "voiceoverSrc": "/home/user/sample-film/preprod/voiceover_master.wav",
+    "musicBedSrc": "/home/user/sample-film/preprod/music_bed.wav",
+    "musicBaseGainDb": -13.5,
+    "duckingAmountDb": -9.0,
+    "silenceDrops": [
+      {
+        "startFrame": 1805,
+        "durationFrames": 33,
+        "reason": "33-frame pre-payoff dead silence vacuum right before Act 3 Archival Paper polarity flip"
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "id": "s01_hook_splice",
+      "shotId": "S01",
+      "durationInFrames": 132,
+      "kind": "MOTION_SCENE",
+      "component": "Shot01HookSplice",
+      "gradeMood": { "paletteId": "SWISS_EDITORIAL_DARK", "temperatureShift": 0.06 },
+      "captionsActive": false,
+      "transitionAfter": { "type": "wipe-right", "durationInFrames": 12 }
+    },
+    {
+      "id": "s02_perception_60ms",
+      "shotId": "S02",
+      "durationInFrames": 324,
+      "kind": "MOTION_SCENE",
+      "component": "Shot02Perception60ms",
+      "gradeMood": { "paletteId": "SWISS_EDITORIAL_DARK", "temperatureShift": 0.06 },
+      "captionsActive": false,
+      "transitionAfter": { "type": "none", "durationInFrames": 0 }
+    },
+    {
+      "id": "s03_eye_trace_broken",
+      "shotId": "S03",
+      "durationInFrames": 228,
+      "kind": "MOTION_SCENE",
+      "component": "Shot03EyeTraceBroken",
+      "gradeMood": { "paletteId": "SWISS_EDITORIAL_DARK", "temperatureShift": 0.02 },
+      "captionsActive": false,
+      "transitionAfter": { "type": "none", "durationInFrames": 0 }
+    },
+    {
+      "id": "s04_eye_trace_locked",
+      "shotId": "S04",
+      "durationInFrames": 251,
+      "kind": "MOTION_SCENE",
+      "component": "Shot04EyeTraceLocked",
+      "gradeMood": { "paletteId": "SWISS_EDITORIAL_DARK", "temperatureShift": 0.08 },
+      "captionsActive": false,
+      "transitionAfter": { "type": "fade", "durationInFrames": 14 }
+    },
+    {
+      "id": "s05_brightness_shatter",
+      "shotId": "S05",
+      "durationInFrames": 252,
+      "kind": "MOTION_SCENE",
+      "component": "Shot05BrightnessShatter",
+      "gradeMood": { "paletteId": "SWISS_EDITORIAL_DARK", "temperatureShift": 0.04 },
+      "captionsActive": false,
+      "transitionAfter": { "type": "none", "durationInFrames": 0 }
+    },
+    {
+      "id": "s06_oklch_discipline",
+      "shotId": "S06",
+      "durationInFrames": 300,
+      "kind": "MOTION_SCENE",
+      "component": "Shot06OklchDiscipline",
+      "gradeMood": { "paletteId": "SWISS_EDITORIAL_DARK", "temperatureShift": 0.08 },
+      "captionsActive": false,
+      "transitionAfter": { "type": "wipe-up", "durationInFrames": 12 }
+    },
+    {
+      "id": "s07_accelerate_rhythm",
+      "shotId": "S07",
+      "durationInFrames": 174,
+      "kind": "MOTION_SCENE",
+      "component": "Shot07AccelerateRhythm",
+      "gradeMood": { "paletteId": "KINETIC_PULSE_SOCIAL", "temperatureShift": 0.05 },
+      "captionsActive": false,
+      "transitionAfter": { "type": "none", "durationInFrames": 0 }
+    },
+    {
+      "id": "s08_silence_flatline",
+      "shotId": "S08",
+      "durationInFrames": 215,
+      "kind": "MOTION_SCENE",
+      "component": "Shot08SilenceFlatline",
+      "gradeMood": { "paletteId": "SWISS_EDITORIAL_DARK", "temperatureShift": 0.0 },
+      "captionsActive": false,
+      "transitionAfter": { "type": "none", "durationInFrames": 0 }
+    },
+    {
+      "id": "s09_cinema_gold_payoff",
+      "shotId": "S09",
+      "durationInFrames": 354,
+      "kind": "MOTION_SCENE",
+      "component": "Shot09CinemaGoldPayoff",
+      "gradeMood": { "paletteId": "TACTILE_PAPER_CRAFT", "temperatureShift": 0.12 },
+      "captionsActive": false,
+      "transitionAfter": { "type": "none", "durationInFrames": 0 }
+    }
+  ]
+}

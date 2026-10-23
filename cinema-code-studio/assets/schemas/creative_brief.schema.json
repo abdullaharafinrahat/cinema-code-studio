@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cinema-code-studio.local/schemas/creative_brief.schema.json",
+  "title": "CinemaCodeStudioCreativeBrief",
+  "description": "Gate 1 Creative Director lock: emotional arc, visual world, typography pair, and anti-cliche constraints.",
+  "type": "object",
+  "required": [
+    "projectTitle",
+    "format",
+    "emotionalArc",
+    "visualWorld",
+    "kuleshovStrategy",
+    "typography",
+    "antiGoals"
+  ],
+  "properties": {
+    "projectTitle": { "type": "string", "minLength": 2 },
+    "targetAudience": { "type": "string" },
+    "format": {
+      "type": "object",
+      "required": ["width", "height", "fps", "targetDurationSec"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 320, "maximum": 7680 },
+        "height": { "type": "integer", "minimum": 320, "maximum": 7680 },
+        "fps": { "type": "integer", "enum": [24, 25, 30, 60] },
+        "targetDurationSec": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "emotionalArc": {
+      "type": "object",
+      "required": ["fromState", "tensionState", "toState", "coreThesis"],
+      "properties": {
+        "fromState": { "type": "string" },
+        "tensionState": { "type": "string" },
+        "toState": { "type": "string" },
+        "coreThesis": { "type": "string" }
+      }
+    },
+    "visualWorld": {
+      "type": "string",
+      "enum": [
+        "SWISS_EDITORIAL_DARK",
+        "TACTILE_PAPER_CRAFT",
+        "PRECISION_CINEMA_LAB",
+        "KINETIC_PULSE_SOCIAL",
+        "CUSTOM_AUTEUR"
+      ]
+    },
+    "kuleshovStrategy": {
+      "type": "string",
+      "description": "How visuals provide concrete evidence, tension, or contrast rather than duplicating spoken nouns."
+    },
+    "typography": {
+      "type": "object",
+      "required": ["displayFont", "utilityFont", "tabularNumerals"],
+      "properties": {
+        "displayFont": { "type": "string" },
+        "utilityFont": { "type": "string" },
+        "tabularNumerals": { "type": "boolean", "const": true }
+      }
+    },
+    "antiGoals": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "type": "string" },
+      "description": "Explicit visual tropes, stock cliches, or motion gimmicks forbidden in this production."
+    }
+  }
+}

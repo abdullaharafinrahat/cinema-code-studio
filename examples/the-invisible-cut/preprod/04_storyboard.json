@@ -1,0 +1,277 @@
+{
+  "projectTitle": "The Invisible Cut",
+  "aspectRatio": "16:9",
+  "fps": 60,
+  "shots": [
+    {
+      "shotId": "S01",
+      "startSec": 0.0,
+      "endSec": 2.0,
+      "narrativeBeat": "HOOK",
+      "shotScale": "CU",
+      "compositionGrid": "RULE_OF_THIRDS",
+      "entryFocalPoint": [0.36, 0.45],
+      "exitFocalPoint": [0.42, 0.46],
+      "colorMoodId": "ACT1_GRAPHITE_BRASS",
+      "paletteHexPreview": {
+        "bg": "#141311",
+        "surface": "#201E1B",
+        "hero": "#C8963E",
+        "text": "#EDE7DA"
+      },
+      "visualDescription": "In-medias-res matte aged-brass film splice rule at x=0.64 on warm carbon canvas with silver-gelatin bone Swiss typography.",
+      "audioScript": "You never notice a great cut.",
+      "onScreenWordCount": 4,
+      "cognitiveLoadScore": 1,
+      "captionsActive": false,
+      "cameraMove": {
+        "type": "DOLLY_IN_INTIMATE",
+        "motivation": "Pull viewer immediately across the splice threshold"
+      },
+      "transitionOut": {
+        "type": "DIRECTIONAL_WIPE",
+        "durationFrames": 12
+      }
+    },
+    {
+      "shotId": "S02",
+      "startSec": 2.0,
+      "endSec": 7.4,
+      "narrativeBeat": "SETUP",
+      "shotScale": "MS",
+      "compositionGrid": "ASYMMETRIC_EDITORIAL",
+      "entryFocalPoint": [0.46, 0.46],
+      "exitFocalPoint": [0.50, 0.48],
+      "colorMoodId": "ACT1_GRAPHITE_BRASS",
+      "paletteHexPreview": {
+        "bg": "#141311",
+        "surface": "#201E1B",
+        "hero": "#C8963E",
+        "text": "#EDE7DA"
+      },
+      "visualDescription": "Asymmetric editorial thesis paired with a precision Braun-inspired 60ms brass chronometer dial on smoked basalt.",
+      "audioScript": "Because great editing isn't software, it's sixty milliseconds of human perception.",
+      "onScreenWordCount": 7,
+      "cognitiveLoadScore": 2,
+      "captionsActive": false,
+      "cameraMove": {
+        "type": "LATERAL_TRACK",
+        "motivation": "Guide gaze smoothly from verbal thesis to millisecond proof"
+      },
+      "transitionOut": {
+        "type": "HARD_CUT",
+        "durationFrames": 0
+      }
+    },
+    {
+      "shotId": "S03",
+      "startSec": 7.4,
+      "endSec": 11.2,
+      "narrativeBeat": "TENSION",
+      "shotScale": "WS",
+      "compositionGrid": "CENTER_PUNCH",
+      "entryFocalPoint": [0.50, 0.48],
+      "exitFocalPoint": [0.50, 0.46],
+      "colorMoodId": "ACT2_TERRACOTTA_TENSION",
+      "paletteHexPreview": {
+        "bg": "#151311",
+        "surface": "#221E1B",
+        "hero": "#D15B3E",
+        "text": "#EDE7DA"
+      },
+      "visualDescription": "3x3 editorial draftsmanship grid showing a matte terracotta optical crosshair jumping erratically across corners.",
+      "audioScript": "Jump the focal point too far, and the eye hunts in the dark.",
+      "onScreenWordCount": 6,
+      "cognitiveLoadScore": 2,
+      "captionsActive": false,
+      "cameraMove": {
+        "type": "DOLLY_IN_INTIMATE",
+        "motivation": "Heighten sensory tension of broken eye-trace continuity"
+      },
+      "transitionOut": {
+        "type": "HARD_CUT",
+        "durationFrames": 0
+      }
+    },
+    {
+      "shotId": "S04",
+      "startSec": 11.2,
+      "endSec": 15.15,
+      "narrativeBeat": "EVIDENCE",
+      "shotScale": "CU",
+      "compositionGrid": "CENTER_PUNCH",
+      "entryFocalPoint": [0.50, 0.46],
+      "exitFocalPoint": [0.50, 0.46],
+      "colorMoodId": "ACT1_GRAPHITE_BRASS",
+      "paletteHexPreview": {
+        "bg": "#141311",
+        "surface": "#201E1B",
+        "hero": "#C8963E",
+        "text": "#EDE7DA"
+      },
+      "visualDescription": "Optical rangefinder rings align concentrically at [0.50, 0.46] in aged brass & bone like a Leica split-prism viewfinder.",
+      "audioScript": "Lock the gaze, and two worlds fuse into one.",
+      "onScreenWordCount": 5,
+      "cognitiveLoadScore": 1,
+      "captionsActive": false,
+      "cameraMove": {
+        "type": "PULL_BACK_REVEAL",
+        "motivation": "Reveal seamless geometric fusion once gaze is anchored"
+      },
+      "transitionOut": {
+        "type": "MATCH_CUT",
+        "durationFrames": 14
+      }
+    },
+    {
+      "shotId": "S05",
+      "startSec": 15.15,
+      "endSec": 19.35,
+      "narrativeBeat": "TENSION",
+      "shotScale": "WS",
+      "compositionGrid": "RULE_OF_THIRDS",
+      "entryFocalPoint": [0.50, 0.48],
+      "exitFocalPoint": [0.46, 0.48],
+      "colorMoodId": "ACT2_TERRACOTTA_TENSION",
+      "paletteHexPreview": {
+        "bg": "#151311",
+        "surface": "#221E1B",
+        "hero": "#D15B3E",
+        "text": "#EDE7DA"
+      },
+      "visualDescription": "Josef Albers luminance study: four stark, identically bright bone-white slabs (L=0.90) compete with zero hierarchy.",
+      "audioScript": "Flood the frame with equal brightness, and attention shatters.",
+      "onScreenWordCount": 6,
+      "cognitiveLoadScore": 2,
+      "captionsActive": false,
+      "cameraMove": {
+        "type": "STATIC_BREATH",
+        "motivation": "Let viewer feel the flat visual glare of uncalibrated brightness"
+      },
+      "transitionOut": {
+        "type": "HARD_CUT",
+        "durationFrames": 0
+      }
+    },
+    {
+      "shotId": "S06",
+      "startSec": 19.35,
+      "endSec": 24.15,
+      "narrativeBeat": "EVIDENCE",
+      "shotScale": "MS",
+      "compositionGrid": "ASYMMETRIC_EDITORIAL",
+      "entryFocalPoint": [0.46, 0.48],
+      "exitFocalPoint": [0.50, 0.48],
+      "colorMoodId": "ACT1_GRAPHITE_BRASS",
+      "paletteHexPreview": {
+        "bg": "#141311",
+        "surface": "#201E1B",
+        "hero": "#C8963E",
+        "text": "#EDE7DA"
+      },
+      "visualDescription": "Three slabs recede into L=0.22 smoked basalt shadow while one 10% aged-brass hero frame (+340%) commands focus.",
+      "audioScript": "Discipline ninety percent into shadow, and one hero commands the room.",
+      "onScreenWordCount": 7,
+      "cognitiveLoadScore": 2,
+      "captionsActive": false,
+      "cameraMove": {
+        "type": "DOLLY_IN_INTIMATE",
+        "motivation": "Gravitate naturally into the single illuminated 10% hero"
+      },
+      "transitionOut": {
+        "type": "DIRECTIONAL_WIPE",
+        "durationFrames": 12
+      }
+    },
+    {
+      "shotId": "S07",
+      "startSec": 24.15,
+      "endSec": 27.05,
+      "narrativeBeat": "REHOOK",
+      "shotScale": "MS",
+      "compositionGrid": "CENTER_PUNCH",
+      "entryFocalPoint": [0.50, 0.48],
+      "exitFocalPoint": [0.50, 0.48],
+      "colorMoodId": "ACT2_TERRACOTTA_TENSION",
+      "paletteHexPreview": {
+        "bg": "#151311",
+        "surface": "#221E1B",
+        "hero": "#D15B3E",
+        "text": "#EDE7DA"
+      },
+      "visualDescription": "Film-strip cadence blocks compress exponentially (2.80s -> 0.20s) in matte Braun terracotta.",
+      "audioScript": "Accelerate the cut to build tension,",
+      "onScreenWordCount": 5,
+      "cognitiveLoadScore": 2,
+      "captionsActive": false,
+      "cameraMove": {
+        "type": "DOLLY_IN_INTIMATE",
+        "motivation": "Physically compress space in sync with accelerating cut rhythm"
+      },
+      "transitionOut": {
+        "type": "HARD_CUT",
+        "durationFrames": 0
+      }
+    },
+    {
+      "shotId": "S08",
+      "startSec": 27.05,
+      "endSec": 30.64,
+      "narrativeBeat": "TENSION",
+      "shotScale": "ECU",
+      "compositionGrid": "CENTER_PUNCH",
+      "entryFocalPoint": [0.50, 0.48],
+      "exitFocalPoint": [0.50, 0.46],
+      "colorMoodId": "ACT2_TERRACOTTA_TENSION",
+      "paletteHexPreview": {
+        "bg": "#151311",
+        "surface": "#221E1B",
+        "hero": "#D15B3E",
+        "text": "#EDE7DA"
+      },
+      "visualDescription": "Analog bone-ink acoustic wave swells, then snaps to a 1px horizontal thread across 33 frames of pure silence.",
+      "audioScript": "then drop into dead silence right before the truth lands.",
+      "onScreenWordCount": 4,
+      "cognitiveLoadScore": 1,
+      "captionsActive": false,
+      "cameraMove": {
+        "type": "DOLLY_IN_INTIMATE",
+        "motivation": "Suspend viewer breath during the 33-frame pre-payoff vacuum"
+      },
+      "transitionOut": {
+        "type": "HARD_CUT",
+        "durationFrames": 0
+      }
+    },
+    {
+      "shotId": "S09",
+      "startSec": 30.64,
+      "endSec": 36.53,
+      "narrativeBeat": "PAYOFF",
+      "shotScale": "CU",
+      "compositionGrid": "CENTER_PUNCH",
+      "entryFocalPoint": [0.50, 0.46],
+      "exitFocalPoint": [0.50, 0.46],
+      "colorMoodId": "ACT3_ARCHIVAL_PAPER_PAYOFF",
+      "paletteHexPreview": {
+        "bg": "#EFE9DD",
+        "surface": "#E3DCCD",
+        "hero": "#B8432A",
+        "text": "#181613"
+      },
+      "visualDescription": "Macro polarity inversion onto warm archival museum paper (#EFE9DD) with deep carbon ink & matte terracotta emblem.",
+      "audioScript": "Zero timelines. Pure code. Cinema by design.",
+      "onScreenWordCount": 7,
+      "cognitiveLoadScore": 1,
+      "captionsActive": false,
+      "cameraMove": {
+        "type": "PULL_BACK_REVEAL",
+        "motivation": "Deliberate tactile editorial breath hold on warm museum stock"
+      },
+      "transitionOut": {
+        "type": "HARD_CUT",
+        "durationFrames": 0
+      }
+    }
+  ]
+}
