@@ -25,7 +25,21 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from studio_common import SCRIPT_FILENAME, compute_signature, script_hash, verify_beat_spans  # noqa: E402
+
 UNIVERSAL_SKELETON_BEATS = {"HOOK", "SETUP", "TENSION", "EVIDENCE", "REHOOK", "PAYOFF", "CTA"}
+
+# Must match the archetype union in assets/remotion-studio/src/types/timeline.ts
+ALLOWED_ARCHETYPES = {
+    "HERO_STATEMENT",
+    "COMPARATIVE_BARS",
+    "TERMINAL_FLOW",
+    "METRIC_PROOF",
+    "SEQUENCE_STEPS",
+    "PULL_QUOTE",
+}
 
 
 def load_json(path: Path) -> dict:
@@ -109,21 +123,87 @@ def check_transition_diversity(shots: list[dict], errors: list[str], warnings: l
 
 
 def check_component_reuse(timeline: dict, errors: list[str], warnings: list[str]) -> None:
-    """No component name reused more than once (unless in a different visual world)."""
-    scenes = timeline.get("scenes", [])
-    comp_counts = Counter()
-    for s in scenes:
-        comp = s.get("component")
-        if comp:
-            comp_counts[comp] += 1
+    """
+    Layout reuse check.
 
+    v4 counted only the optional `component` field, which the timeline never sets,
+    so this check could never fail. It now checks what the timeline actually uses:
+    - `component` (if present) must not repeat.
+    - An identical (archetype + props) pair must not repeat: that is a copy-pasted scene.
+    - One archetype dominating the timeline (> 2 uses) is a warning: the layout vocabulary is too narrow.
+    """
+    scenes = timeline.get("scenes", [])
+
+    comp_counts = Counter(s["component"] for s in scenes if s.get("component"))
     for comp, count in comp_counts.items():
         if count > 1:
             errors.append(
                 f"`component: '{comp}'` is reused {count} times in the timeline. "
-                "Each component must be unique per script — if two beats need the same visual "
-                "metaphor, parameterize it differently (different props, different camera move, different transition)."
+                "Each component must be unique per script — parameterize it differently instead."
             )
+
+    seen_pairs: dict[str, str] = {}
+    for s in scenes:
+        arch = s.get("archetype")
+        if not arch:
+            continue
+        key = json.dumps({"archetype": arch, "props": s.get("props", {})}, sort_keys=True)
+        if key in seen_pairs:
+            errors.append(
+                f"Scene '{s.get('id', '?')}' repeats the exact archetype+props of scene '{seen_pairs[key]}'. "
+                "Copy-pasted scenes are not allowed — change the props so the beat has its own content."
+            )
+        else:
+            seen_pairs[key] = s.get("id", "?")
+
+    arch_counts = Counter(s["archetype"] for s in scenes if s.get("archetype"))
+    for arch, count in arch_counts.items():
+        if count > 2:
+            warnings.append(
+                f"Archetype '{arch}' is used {count} times. Vary the layouts so the edit does not read as one template."
+            )
+
+
+def check_archetypes(timeline: dict, errors: list[str], warnings: list[str]) -> None:
+    for s in timeline.get("scenes", []):
+        arch = s.get("archetype")
+        if arch and arch not in ALLOWED_ARCHETYPES:
+            errors.append(
+                f"Scene '{s.get('id', '?')}' uses unknown archetype '{arch}'. Allowed: {sorted(ALLOWED_ARCHETYPES)}."
+            )
+
+
+def check_script_binding(grammar: dict, script_path: Path, errors: list[str], warnings: list[str]) -> None:
+    """
+    The grammar must be bound to THIS script:
+    1. The ingested script exists and its hash equals `scriptSha256`.
+    2. `scriptSignatureHash` equals the value recomputed from the script + binding fields.
+    3. Every beat is anchored to a verbatim quote from the script.
+    """
+    if not script_path.exists():
+        errors.append(
+            f"Script not ingested: {script_path} is missing. Run scripts/ingest_script.py before building the grammar."
+        )
+        return
+
+    raw = script_path.read_text(encoding="utf-8")
+    actual_hash = script_hash(raw)
+
+    stored_hash = grammar.get("scriptSha256", "")
+    if stored_hash != actual_hash:
+        errors.append(
+            f"`scriptSha256` ({stored_hash or 'missing'}) does not match the ingested script ({actual_hash}). "
+            "The grammar was built for a different script or the script changed. Re-run stamp_edit_grammar.py after updating the grammar."
+        )
+
+    expected_sig = compute_signature(grammar, actual_hash)
+    if grammar.get("scriptSignatureHash") != expected_sig:
+        errors.append(
+            f"`scriptSignatureHash` is '{grammar.get('scriptSignatureHash')}' but the grammar derives '{expected_sig}'. "
+            "Signatures are computed, not typed: run scripts/stamp_edit_grammar.py."
+        )
+
+    verify_beat_spans(grammar, raw, errors, warnings)
 
 
 def check_edit_grammar_signature(
@@ -200,15 +280,23 @@ def main() -> None:
     parser.add_argument("--grammar", type=Path, required=True, help="Path to 01a_edit_grammar.json")
     parser.add_argument("--storyboard", type=Path, required=True, help="Path to 04_storyboard.json")
     parser.add_argument("--timeline", type=Path, default=None, help="Optional path to 05_timeline.json")
+    parser.add_argument(
+        "--script",
+        type=Path,
+        default=None,
+        help="Ingested script (default: 00_script.txt next to the grammar)",
+    )
     args = parser.parse_args()
 
     grammar = load_json(args.grammar)
     storyboard = load_json(args.storyboard)
     shots = storyboard.get("shots", [])
+    script_path = args.script or args.grammar.parent / SCRIPT_FILENAME
 
     errors: list[str] = []
     warnings: list[str] = []
 
+    check_script_binding(grammar, script_path, errors, warnings)
     check_script_shape(grammar, errors, warnings)
     check_shot_scale_alternation(shots, errors, warnings)
     check_camera_move_diversity(shots, errors, warnings)
@@ -218,6 +306,7 @@ def main() -> None:
 
     if args.timeline and args.timeline.exists():
         timeline = load_json(args.timeline)
+        check_archetypes(timeline, errors, warnings)
         check_component_reuse(timeline, errors, warnings)
 
     report = {

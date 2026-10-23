@@ -44,10 +44,16 @@ Never jump straight from a user prompt to writing `.tsx` components. Initialize 
 * **Read**: `references/01-creative-direction.md` (schema: `assets/schemas/creative_brief.schema.json`).
 * **Deliverable**: Lock in the **Emotional Shift**, **Visual World** (`COMMERCIAL_MIXED_MEDIA` at `25fps` for high-craft commercial speed-ramps, or `SWISS_EDITORIAL_DARK` / `TACTILE_PAPER_CRAFT` at `30/60fps`), **Mixed-Media Asset Strategy**, **Typography Pair** (preloaded via `@remotion/google-fonts`), and explicit **Anti-Goals**.
 
+### Gate 0: Script Ingestion (`preprod/00_script.txt` + `00_script.meta.json`) — MANDATORY FIRST
+* **Action**: `python3 scripts/ingest_script.py <script.txt> --project <project>` (or pass `--script` to `init_production.py`). This copies the script into the project and records its normalized SHA-256 and numbered sentences.
+* **Why**: v4 never read the script, so every edit grammar was free-text and could be reused across scripts. All later gates now bind to this hash.
+
 ### Gate 1.5: Script Shape & Edit Grammar (`preprod/01a_edit_grammar.json`)
 * **Read**: `references/03-storyboarding-and-cinematography.md` §5 "Per-Script Shot Vocabulary".
+* **Beat anchoring (new, enforced)**: every beat in `beatSequence` needs an entry in `scriptShape.beatSourceSpans` containing a 3+ word quote copied **verbatim** from the script. Paraphrases fail the audit.
+* **Signature (new, derived)**: never type `scriptSignatureHash`. Run `python3 scripts/stamp_edit_grammar.py <project>/preprod/01a_edit_grammar.json` after the grammar is final. It writes `scriptSha256` and a signature computed from the script hash and the grammar's binding fields. Editing the grammar after stamping breaks the audit and requires re-stamping.
 * **Deliverable**: Extract THIS script's unique narrative arc and generate a per-script shot vocabulary, camera-move sequence, transition vocabulary, and pacing signature. **Never reuse the universal HOOK/SETUP/TENSION/EVIDENCE/PAYOFF/CTA skeleton.** Define custom beats specific to this script. Each shot in the storyboard must carry `editGrammarSignature` matching `scriptSignatureHash` from this grammar.
-* **Validation**: Run `python3 scripts/audit_edit_diversity.py --grammar <project>/preprod/01a_edit_grammar.json --storyboard <project>/preprod/04_storyboard.json`. Must exit `0`. This prevents "same edit" leakage across scripts.
+* **Validation**: Run `python3 scripts/audit_edit_diversity.py --grammar <project>/preprod/01a_edit_grammar.json --storyboard <project>/preprod/04_storyboard.json`. Must exit `0`. It checks script binding (hash, derived signature, verbatim beat spans) as well as structure. Then run `python3 scripts/audit_sameness.py <project> [<other-projects>...]` to confirm this edit is not too similar to other projects.
 
 ### Gate 2: Media Intelligence & Retention Architecture (`preprod/02_retention_map.json`)
 * **Read**: `references/02-retention-neuroscience.md`.
@@ -101,7 +107,7 @@ Never jump straight from a user prompt to writing `.tsx` components. Initialize 
 
 ### Gate 10: Final Render & Broadcast Master (`videos/<name>.mp4`)
 * **Action**:
-  1. Render picture (`npx remotion render MasterSequence ../out/picture.mp4 --codec=h264 --crf=17 --pixel-format=yuv420p --concurrency=100%`).
+  1. Write render props from THIS project's timeline: `python3 scripts/build_render_props.py <project>/preprod/05_timeline.json --out <project>/preprod/render-props.json`. Then render picture from `remotion/`: `npx remotion render MasterSequence ../out/picture.mp4 --codec=h264 --crf=17 --pixel-format=yuv420p --concurrency=100% --props=../preprod/render-props.json`. Without `--props` the render shows the bundled reference reel.
   2. Mix & master audio via two-pass EBU R128 `loudnorm` (`-14.0 LUFS`, `-1.0 dBTP`, re-asserting digital zero `0` PCM samples during intentional `-∞ dB` silence drops) and mux with `+faststart`.
   3. Verify streams with `ffprobe` and preserve existing user videos during workspace cleanup.
 
@@ -113,7 +119,7 @@ Never jump straight from a user prompt to writing `.tsx` components. Initialize 
 2. **Fetch & Visually Verify Real Assets First**: Do NOT AI-generate images for everything or build abstract geometric 3D/CSS shapes. Fetch authentic vector brand icons and real online photography when available, and visually inspect every fetched or generated asset (`read_file`) for literal relevance and zero artifacts before using it.
 3. **5–8 Literal Mixed-Media Layers Per Shot (Zero Naked Shapes)**: Combine real photography/cutouts, authentic software/brand icons, tactile NLE/terminal UI, frosted node cards, and optical lighting. Never ship rectangular SaaS 4-column card grids or fake sci-fi HUD strings (`CHANNEL 01`, `TC 00:00`, `SIGNAL CORE`).
 4. **Heavy Camera Motivation — Zero Parked Text or Objects**: No text or object may sit static on screen for long. Drive continuous spatial energy via recursive `<PortalZoomStage>` zoom-outs, 3D perspective tilts, whip-pan saccades, and focal cortex push-ins.
-5. **Script-Specific Edit Grammar (Gate 1.5)**: Every script MUST generate a unique `01a_edit_grammar.json` with custom narrative beats, a per-script shot-scale sequence, camera-move vocabulary, transition vocabulary, and pacing signature. **Never default to the universal HOOK/SETUP/TENSION/EVIDENCE/PAYOFF/CTA skeleton.** Each shot's `editGrammarSignature` must match the grammar's `scriptSignatureHash`. This is what makes every edit uniquely identifiable.
+5. **Script-Specific Edit Grammar (Gate 1.5)**: Every script MUST be ingested (Gate 0) and generate a unique, script-bound `01a_edit_grammar.json` (verbatim `beatSourceSpans`, derived signature via `stamp_edit_grammar.py`) with custom narrative beats, a per-script shot-scale sequence, camera-move vocabulary, transition vocabulary, and pacing signature. **Never default to the universal HOOK/SETUP/TENSION/EVIDENCE/PAYOFF/CTA skeleton.** Each shot's `editGrammarSignature` must match the grammar's `scriptSignatureHash`. This is what makes every edit uniquely identifiable.
 6. **Shot-Scale & Camera-Move Alternation**: No 3+ consecutive shots at the same scale. No 3+ consecutive shots using the same camera-move type. No 2+ consecutive shots with the same transition-out type. Each cut must change perspective by at least 14% and be motivated by the script's beat.
 7. **Preloaded `@remotion/google-fonts` Lock**: Never rely on system `sans-serif`/`serif` (which falls back to `DejaVu Sans` on headless Linux). Preload exact weights in `src/fonts.ts`.
 8. **Pure Frame Determinism**: Every visual state must derive purely from `useCurrentFrame()`. Never use CSS `transition`, `@keyframes`, `requestAnimationFrame`, `setTimeout`, or unseeded `Math.random()`.

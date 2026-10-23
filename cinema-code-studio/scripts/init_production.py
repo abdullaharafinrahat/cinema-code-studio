@@ -10,10 +10,17 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-def init_production(target_dir: Path, title: str, width: int, height: int, fps: int) -> dict:
+from studio_common import ingest_script  # noqa: E402
+
+
+def init_production(
+    target_dir: Path, title: str, width: int, height: int, fps: int, script: Path | None = None
+) -> dict:
     skill_root = Path(__file__).resolve().parent.parent
     template_dir = skill_root / "assets" / "remotion-studio"
     audio_kit_dir = skill_root / "assets" / "audio-kit"
@@ -81,6 +88,12 @@ def init_production(target_dir: Path, title: str, width: int, height: int, fps: 
     if not brief_path.exists():
         brief_path.write_text(json.dumps(brief_stub, indent=2), encoding="utf-8")
 
+    script_meta = None
+    if script is not None:
+        if not script.exists():
+            raise SystemExit(f"Error: script not found: {script}")
+        script_meta = ingest_script(script, preprod_dir)
+
     summary = {
         "status": "initialized",
         "projectRoot": str(target_dir),
@@ -90,7 +103,17 @@ def init_production(target_dir: Path, title: str, width: int, height: int, fps: 
         "remotionDir": str(remotion_dir),
         "outDir": str(out_dir),
         "bundledSfx": copied_sfx,
-        "nextGate": "Edit preprod/01_creative_brief.json (Gate 1), source & verify mixed-media assets, then build color script & storyboard.",
+        "script": (
+            {"ingested": True, "scriptSha256": script_meta["scriptSha256"], "sentences": len(script_meta["sentences"])}
+            if script_meta
+            else {"ingested": False, "warning": "No script given. Gate 1.5 cannot bind the edit grammar to a script."}
+        ),
+        "nextGate": (
+            "Edit preprod/01_creative_brief.json (Gate 1), write preprod/01a_edit_grammar.json with beatSourceSpans, "
+            "then run stamp_edit_grammar.py."
+            if script_meta
+            else "Re-run with --script <your-script.txt> before Gate 1.5."
+        ),
     }
     return summary
 
@@ -102,9 +125,10 @@ def main() -> None:
     parser.add_argument("--width", type=int, default=1920, help="Frame width in pixels (default: 1920)")
     parser.add_argument("--height", type=int, default=1080, help="Frame height in pixels (default: 1080)")
     parser.add_argument("--fps", type=int, default=25, choices=[24, 25, 30, 60], help="Frames per second (default: 25)")
+    parser.add_argument("--script", type=Path, default=None, help="Script to ingest into preprod/00_script.txt")
     args = parser.parse_args()
 
-    result = init_production(args.project_dir, args.title, args.width, args.height, args.fps)
+    result = init_production(args.project_dir, args.title, args.width, args.height, args.fps, args.script)
     print(json.dumps(result, indent=2))
 
 

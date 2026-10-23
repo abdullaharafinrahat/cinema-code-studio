@@ -4,6 +4,7 @@ import { StudioPalette } from "../tokens/oklchPalettes";
 import { getSafeZone } from "../tokens/framingGrids";
 import { SPRING_PRESETS } from "../tokens/springPhysics";
 import { KineticTypography } from "./KineticTypography";
+import type { StageArchetype } from "../types/timeline";
 
 interface ComparativeBarItem {
   label: string;
@@ -13,7 +14,7 @@ interface ComparativeBarItem {
 }
 
 interface VisualMetaphorStageProps {
-  archetype?: "HERO_STATEMENT" | "COMPARATIVE_BARS" | "TERMINAL_FLOW" | "METRIC_PROOF";
+  archetype?: StageArchetype;
   palette: StudioPalette;
   props?: Record<string, unknown>;
   isFirstScene?: boolean;
@@ -231,6 +232,159 @@ export const VisualMetaphorStage: React.FC<VisualMetaphorStageProps> = ({
             </div>
           )}
         </div>
+      </AbsoluteFill>
+    );
+  }
+
+  if (archetype === "SEQUENCE_STEPS") {
+    // Numbered process steps taken from THIS script's sentences. The hero step is highlighted.
+    const steps = (props.steps as { label: string; detail?: string }[]) || [
+      { label: "Step one", detail: "" },
+      { label: "Step two", detail: "" },
+    ];
+    const heroIndex = Number(props.heroIndex ?? steps.length - 1);
+
+    return (
+      <AbsoluteFill
+        style={{
+          backgroundColor: palette.dominantBg,
+          paddingTop: safe.topPx,
+          paddingBottom: safe.bottomPx,
+          paddingLeft: safe.leftPx,
+          paddingRight: safe.rightPx,
+          justifyContent: "center",
+        }}
+      >
+        {eyebrow && (
+          <div
+            style={{
+              fontFamily: "JetBrains Mono, monospace",
+              fontSize: 20,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: palette.mutedContextText,
+              marginBottom: 24,
+              opacity: containerReveal,
+            }}
+          >
+            {eyebrow}
+          </div>
+        )}
+        <div style={{ display: "flex", flexDirection: "column", gap: 26, maxWidth: "80%" }}>
+          {steps.map((step, idx) => {
+            const stepSpring = spring({
+              frame: frame + lead - idx * 9,
+              fps,
+              config: idx === heroIndex ? SPRING_PRESETS.tactile : SPRING_PRESETS.editorial,
+            });
+            const isHero = idx === heroIndex;
+            return (
+              <div
+                key={`${step.label}-${idx}`}
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: 26,
+                  opacity: interpolate(stepSpring, [0, 1], [0, 1], {
+                    extrapolateLeft: "clamp",
+                    extrapolateRight: "clamp",
+                  }),
+                  transform: `translateX(${interpolate(stepSpring, [0, 1], [-40, 0], {
+                    extrapolateLeft: "clamp",
+                    extrapolateRight: "clamp",
+                  })}px)`,
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "JetBrains Mono, monospace",
+                    fontSize: 28,
+                    fontVariantNumeric: "tabular-nums",
+                    color: isHero ? palette.heroAccent : palette.mutedContextText,
+                    minWidth: 56,
+                  }}
+                >
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <div
+                    style={{
+                      fontFamily: "Inter, system-ui, sans-serif",
+                      fontSize: isHero ? 48 : 40,
+                      fontWeight: 700,
+                      color: isHero ? palette.primaryText : palette.mutedContextText,
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    {step.label}
+                  </div>
+                  {step.detail && (
+                    <div
+                      style={{
+                        marginTop: 6,
+                        fontFamily: "Inter, system-ui, sans-serif",
+                        fontSize: 24,
+                        color: palette.mutedContextText,
+                      }}
+                    >
+                      {step.detail}
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </AbsoluteFill>
+    );
+  }
+
+  if (archetype === "PULL_QUOTE") {
+    // A single line from the script, set large with a hairline rule. Quote text is taken verbatim from the script.
+    const quote = String(props.quote ?? lines.join(" "));
+    const source = String(props.source ?? "");
+    const ruleGrow = interpolate(frame + lead, [0, 18], [0, 1], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
+
+    return (
+      <AbsoluteFill
+        style={{
+          backgroundColor: palette.dominantBg,
+          padding: `${safe.topPx}px ${safe.rightPx}px ${safe.bottomPx}px ${safe.leftPx}px`,
+          justifyContent: "center",
+        }}
+      >
+        <div style={{ width: `${ruleGrow * 120}px`, height: 3, backgroundColor: palette.heroAccent, marginBottom: 36 }} />
+        <div
+          style={{
+            fontFamily: "Inter, system-ui, sans-serif",
+            fontSize: width > height ? 76 : 58,
+            fontWeight: 700,
+            lineHeight: 1.15,
+            letterSpacing: "-0.02em",
+            color: palette.primaryText,
+            maxWidth: "86%",
+            opacity: containerReveal,
+          }}
+        >
+          &ldquo;{quote}&rdquo;
+        </div>
+        {source && (
+          <div
+            style={{
+              marginTop: 28,
+              fontFamily: "JetBrains Mono, monospace",
+              fontSize: 22,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: palette.mutedContextText,
+            }}
+          >
+            {source}
+          </div>
+        )}
       </AbsoluteFill>
     );
   }

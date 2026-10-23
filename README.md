@@ -64,9 +64,23 @@ A full-craft programmatic video editing, mixed-media compositing, cinematography
 
 ## Quickstart
 
-### 1. Scaffold a New Commercial Production
+### 1. Scaffold a New Commercial Production (bind the script first)
 ```bash
-python3 cinema-code-studio/scripts/init_production.py ./my-commercial --fps 25 --width 1920 --height 1080
+python3 cinema-code-studio/scripts/init_production.py ./my-commercial --fps 25 --width 1920 --height 1080 --script my-script.txt
+```
+
+### 1b. Gate 1.5 — Bind the Edit Grammar to the Script
+```bash
+# after writing preprod/01a_edit_grammar.json with verbatim beatSourceSpans:
+python3 cinema-code-studio/scripts/stamp_edit_grammar.py ./my-commercial/preprod/01a_edit_grammar.json
+python3 cinema-code-studio/scripts/audit_edit_diversity.py --grammar ./my-commercial/preprod/01a_edit_grammar.json --storyboard ./my-commercial/preprod/04_storyboard.json
+# compare against other projects to catch "same edit" output:
+python3 cinema-code-studio/scripts/audit_sameness.py ./my-commercial ./other-project
+```
+
+### 1c. Run the Regression Tests
+```bash
+python3 -m unittest discover -s cinema-code-studio/tests -v
 ```
 
 ### 2. Verify Mixed-Media Assets & Color Script

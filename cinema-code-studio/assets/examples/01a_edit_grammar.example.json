@@ -18,18 +18,70 @@
       "BLOWUP": "Everything fails spectacularly to justify the redesign",
       "RECONSTRUCTION": "Silent rebuild with deliberate camera orbit around the new architecture",
       "TRIUMPH": "Orbital celebration as the complete system proves itself end-to-end"
+    },
+    "beatSourceSpans": {
+      "INVERT_PREMISE": "Every great cut is human psychology—never the software.",
+      "CRITICAL_FLAW": "When structure, eye-trace, and 60-30-10 color are mathematical, iteration drops tenfold.",
+      "EXPERIMENT": "The brain reads the cut before the eye finishes moving—that's why the invisible edit wins.",
+      "BLOWUP": "Ninety percent of what you see is discipline—letting go of what doesn't serve the cut.",
+      "RECONSTRUCTION": "One hero commands. Zero competing glare. Every node earns its place or it disappears.",
+      "TRIUMPH": "Great editing isn't software—it's 60 milliseconds of human perception engineered by design."
     }
   },
-  "shotVocabulary": ["EWS", "ECU", "MS", "CU", "WS", "CU", "ECU", "WS", "MS", "EWS"],
-  "cameraMoveVocabulary": [
-    {"type": "CRASH_ZOOM_REVEAL", "motivation": "Crash into the critical flaw to shatter assumptions", "beatId": "CRITICAL_FLAW"},
-    {"type": "WHIP_PAN_SACCADE", "motivation": "Rapid whip between competing options to show investigative tension", "beatId": "EXPERIMENT"},
-    {"type": "TILT_AROUND_PORTAL", "motivation": "Tilt around the portal to reveal the rebuilt world from a new angle", "beatId": "RECONSTRUCTION"},
-    {"type": "ORBITAL_ORBIT", "motivation": "Orbit the hero to celebrate the full system working end-to-end", "beatId": "TRIUMPH"},
-    {"type": "VERTICAL_DROP", "motivation": "Drop vertically into the core mechanism to show the deepest layer", "beatId": "BLOWUP"},
-    {"type": "DOLLY_IN_INTIMATE", "motivation": "Slow intimate push into the reconstructed hero to build emotional connection", "beatId": "RECONSTRUCTION"}
+  "shotVocabulary": [
+    "EWS",
+    "ECU",
+    "MS",
+    "CU",
+    "WS",
+    "CU",
+    "ECU",
+    "WS",
+    "MS",
+    "EWS"
   ],
-  "transitionVocabulary": ["HARD_CUT", "BOKEH_RING_WIPE", "MATCH_CUT", "PORTAL_ZOOM_OUT", "VELOCITY_MATCH_DISSOLVE", "J_CUT", "L_CUT", "GLOW_SWEEP_FRAME"],
+  "cameraMoveVocabulary": [
+    {
+      "type": "CRASH_ZOOM_REVEAL",
+      "motivation": "Crash into the critical flaw to shatter assumptions",
+      "beatId": "CRITICAL_FLAW"
+    },
+    {
+      "type": "WHIP_PAN_SACCADE",
+      "motivation": "Rapid whip between competing options to show investigative tension",
+      "beatId": "EXPERIMENT"
+    },
+    {
+      "type": "TILT_AROUND_PORTAL",
+      "motivation": "Tilt around the portal to reveal the rebuilt world from a new angle",
+      "beatId": "RECONSTRUCTION"
+    },
+    {
+      "type": "ORBITAL_ORBIT",
+      "motivation": "Orbit the hero to celebrate the full system working end-to-end",
+      "beatId": "TRIUMPH"
+    },
+    {
+      "type": "VERTICAL_DROP",
+      "motivation": "Drop vertically into the core mechanism to show the deepest layer",
+      "beatId": "BLOWUP"
+    },
+    {
+      "type": "DOLLY_IN_INTIMATE",
+      "motivation": "Slow intimate push into the reconstructed hero to build emotional connection",
+      "beatId": "RECONSTRUCTION"
+    }
+  ],
+  "transitionVocabulary": [
+    "HARD_CUT",
+    "BOKEH_RING_WIPE",
+    "MATCH_CUT",
+    "PORTAL_ZOOM_OUT",
+    "VELOCITY_MATCH_DISSOLVE",
+    "J_CUT",
+    "L_CUT",
+    "GLOW_SWEEP_FRAME"
+  ],
   "pacingSignature": {
     "startPace": "IMMEDIATE_CONFRONTATION",
     "accelerationPoint": "After the counterexample at beat CRITICAL_FLAW",
@@ -37,11 +89,12 @@
     "breathHoldLocation": "The silent rebuild at RECONSTRUCTION (8.5s single hold)",
     "endingPace": "IMPACT_RESOLUTION"
   },
-  "scriptSignatureHash": "INVERT-FLAW-SHADOW-REBUILD-0425",
+  "scriptSignatureHash": "EG-47CB9F5134A5C1DC",
   "forbiddenRepetitions": [
     "No three consecutive CU shots",
     "No portal-zoom-out on every transition (max 2 per script)",
     "No BokehRingWipe between every scene (max 3 per script)",
     "No camera move repeated 3+ times consecutively"
-  ]
+  ],
+  "scriptSha256": "7dc70c3704a1a968e8a105af45589f19910ec1c8e4b17a7363e31394c91b044a"
 }

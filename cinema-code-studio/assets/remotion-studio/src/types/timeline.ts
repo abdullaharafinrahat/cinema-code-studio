@@ -34,13 +34,25 @@ export interface TransitionSpec {
   durationInFrames: number;
 }
 
+/**
+ * Layout archetypes available to VisualMetaphorStage.
+ * Keep in sync with ALLOWED_ARCHETYPES in scripts/audit_edit_diversity.py.
+ */
+export type StageArchetype =
+  | "HERO_STATEMENT"
+  | "COMPARATIVE_BARS"
+  | "TERMINAL_FLOW"
+  | "METRIC_PROOF"
+  | "SEQUENCE_STEPS"
+  | "PULL_QUOTE";
+
 export interface TimelineScene {
   id: string;
   shotId: string;
   durationInFrames: number;
   kind: "FOOTAGE" | "MOTION_SCENE" | "HYBRID_COMPOSITE";
   component?: string;
-  archetype?: "HERO_STATEMENT" | "COMPARATIVE_BARS" | "TERMINAL_FLOW" | "METRIC_PROOF";
+  archetype?: StageArchetype;
   props?: Record<string, unknown>;
   footage?: FootageSpec;
   gradeMood?: GradeMoodSpec;
