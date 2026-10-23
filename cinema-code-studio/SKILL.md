@@ -36,13 +36,18 @@ You are not a script generator slapping animations onto a webpage or rendering n
 
 ---
 
-## The 10-Gate Studio Pipeline (Mandatory Order)
+## 10-Gate Studio Pipeline (Mandatory Order)
 
 Never jump straight from a user prompt to writing `.tsx` components. Initialize a workspace with `python3 scripts/init_production.py <project-dir>` and progress sequentially through each gate.
 
 ### Gate 1: Creative Direction (`preprod/01_creative_brief.json`)
 * **Read**: `references/01-creative-direction.md` (schema: `assets/schemas/creative_brief.schema.json`).
 * **Deliverable**: Lock in the **Emotional Shift**, **Visual World** (`COMMERCIAL_MIXED_MEDIA` at `25fps` for high-craft commercial speed-ramps, or `SWISS_EDITORIAL_DARK` / `TACTILE_PAPER_CRAFT` at `30/60fps`), **Mixed-Media Asset Strategy**, **Typography Pair** (preloaded via `@remotion/google-fonts`), and explicit **Anti-Goals**.
+
+### Gate 1.5: Script Shape & Edit Grammar (`preprod/01a_edit_grammar.json`)
+* **Read**: `references/03-storyboarding-and-cinematography.md` §5 "Per-Script Shot Vocabulary".
+* **Deliverable**: Extract THIS script's unique narrative arc and generate a per-script shot vocabulary, camera-move sequence, transition vocabulary, and pacing signature. **Never reuse the universal HOOK/SETUP/TENSION/EVIDENCE/PAYOFF/CTA skeleton.** Define custom beats specific to this script. Each shot in the storyboard must carry `editGrammarSignature` matching `scriptSignatureHash` from this grammar.
+* **Validation**: Run `python3 scripts/audit_edit_diversity.py --grammar <project>/preprod/01a_edit_grammar.json --storyboard <project>/preprod/04_storyboard.json`. Must exit `0`. This prevents "same edit" leakage across scripts.
 
 ### Gate 2: Media Intelligence & Retention Architecture (`preprod/02_retention_map.json`)
 * **Read**: `references/02-retention-neuroscience.md`.
@@ -65,14 +70,15 @@ Never jump straight from a user prompt to writing `.tsx` components. Initialize 
   3. **Mandatory Visual Inspection**: Run `python3 scripts/verify_mixed_media_assets.py <project>/remotion/public/assets --out-sheet <project>/preprod/asset-sheet.jpg` AND visually inspect every image (`read_file`) to reject off-topic results, watermarks, purple tints, or duplicated subjects before compositing!
 
 ### Gate 5: Complete Storyboard & Eye-Trace Plan (`preprod/04_storyboard.json` + `storyboard.png`)
-* **Read**: `references/03-storyboarding-and-cinematography.md` and `references/04-editing-psychology.md`.
+* **Read**: `references/03-storyboarding-and-cinematography.md` (including §5 Per-Script Shot Vocabulary) and `references/04-editing-psychology.md`.
 * **Validation**:
   1. `python3 scripts/audit_eye_trace.py <project>/preprod/04_storyboard.json`
-  2. `python3 scripts/render_storyboard_board.py <project>/preprod/04_storyboard.json --out <project>/preprod/storyboard.png`
+  2. `python3 scripts/audit_edit_diversity.py --grammar <project>/preprod/01a_edit_grammar.json --storyboard <project>/preprod/04_storyboard.json [--timeline <project>/preprod/05_timeline.json]`
+  3. `python3 scripts/render_storyboard_board.py <project>/preprod/04_storyboard.json --out <project>/preprod/storyboard.png`
 
 ### Gate 6: Editorial Paper Cut (`preprod/05_timeline.json`)
 * **Read**: `references/04-editing-psychology.md`.
-* **Validation**: `python3 scripts/audit_retention_and_pacing.py <project>/preprod/04_storyboard.json <project>/preprod/05_timeline.json`
+* **Validation**: `python3 scripts/audit_retention_and_pacing.py <project>/preprod/04_storyboard.json <project>/preprod/05_timeline.json` (now also enforces shot-scale alternation, camera-move diversity, and no 3+ consecutive same-scale/same-move shots).
 
 ### Gate 7: Commercial Mixed-Media & Camera Choreography (`remotion/src/`)
 * **Read**: `references/06-motion-choreography.md` and `references/08-remotion-engineering-rules.md`.
@@ -107,11 +113,11 @@ Never jump straight from a user prompt to writing `.tsx` components. Initialize 
 2. **Fetch & Visually Verify Real Assets First**: Do NOT AI-generate images for everything or build abstract geometric 3D/CSS shapes. Fetch authentic vector brand icons and real online photography when available, and visually inspect every fetched or generated asset (`read_file`) for literal relevance and zero artifacts before using it.
 3. **5–8 Literal Mixed-Media Layers Per Shot (Zero Naked Shapes)**: Combine real photography/cutouts, authentic software/brand icons, tactile NLE/terminal UI, frosted node cards, and optical lighting. Never ship rectangular SaaS 4-column card grids or fake sci-fi HUD strings (`CHANNEL 01`, `TC 00:00`, `SIGNAL CORE`).
 4. **Heavy Camera Motivation — Zero Parked Text or Objects**: No text or object may sit static on screen for long. Drive continuous spatial energy via recursive `<PortalZoomStage>` zoom-outs, 3D perspective tilts, whip-pan saccades, and focal cortex push-ins.
-5. **Preloaded `@remotion/google-fonts` Lock**: Never rely on system `sans-serif`/`serif` (which falls back to `DejaVu Sans` on headless Linux). Preload exact weights in `src/fonts.ts`.
-6. **Pure Frame Determinism**: Every visual state must derive purely from `useCurrentFrame()`. Never use CSS `transition`, `@keyframes`, `requestAnimationFrame`, `setTimeout`, or unseeded `Math.random()`.
-7. **Monotonically Increasing & Clamped `interpolate()`**: Always pass strictly increasing `inputRange` (`[0, 1]`, reversing `outputRange` when needed) with `{ extrapolateLeft: "clamp", extrapolateRight: "clamp" }`.
-8. **Frame-0 Magnetism**: Frame `0` must start *in medias res* at full visual contrast—never fade in from black.
-9. **90% Shadow Discipline (One Hero Per Frame)**: When surrounded by competing elements, discipline background elements into deep shadow (`8–15%` luma + soft defocus) so ONE hero viewport commands the room (`|ΔL| >= 0.36`).
-10. **Calibrated Eye-Trace & Split-Portrait Registration**: Measure exact pupil & nose-bridge pixel coordinates before match-cutting or splitting faces (`transformOrigin: "50% 37%"`).
-11. **Lightweight Optical Compositing**: Never put full-screen SVG `<feTurbulence>` or heavy root CSS `filter:` readbacks over 1080p compositions (stalls headless Skia 25x). Use crisp CSS gradients, GPU transforms, and lightweight `OpticalTexture`.
+5. **Script-Specific Edit Grammar (Gate 1.5)**: Every script MUST generate a unique `01a_edit_grammar.json` with custom narrative beats, a per-script shot-scale sequence, camera-move vocabulary, transition vocabulary, and pacing signature. **Never default to the universal HOOK/SETUP/TENSION/EVIDENCE/PAYOFF/CTA skeleton.** Each shot's `editGrammarSignature` must match the grammar's `scriptSignatureHash`. This is what makes every edit uniquely identifiable.
+6. **Shot-Scale & Camera-Move Alternation**: No 3+ consecutive shots at the same scale. No 3+ consecutive shots using the same camera-move type. No 2+ consecutive shots with the same transition-out type. Each cut must change perspective by at least 14% and be motivated by the script's beat.
+7. **Preloaded `@remotion/google-fonts` Lock**: Never rely on system `sans-serif`/`serif` (which falls back to `DejaVu Sans` on headless Linux). Preload exact weights in `src/fonts.ts`.
+8. **Pure Frame Determinism**: Every visual state must derive purely from `useCurrentFrame()`. Never use CSS `transition`, `@keyframes`, `requestAnimationFrame`, `setTimeout`, or unseeded `Math.random()`.
+9. **Monotonically Increasing & Clamped `interpolate()`**: Always pass strictly increasing `inputRange` (`[0, 1]`, reversing `outputRange` when needed) with `{ extrapolateLeft: "clamp", extrapolateRight: "clamp" }`.
+10. **Frame-0 Magnetism**: Frame `0` must start *in medias res* at full visual contrast—never fade in from black.
+11. **90% Shadow Discipline (One Hero Per Frame)**: When surrounded by competing elements, discipline background elements into deep shadow (`8–15%` luma + soft defocus) so ONE hero viewport commands the room (`|ΔL| >= 0.36`).
 12. **Mandatory Visual QA & Video Preservation**: Always inspect rendered QA contact sheets with your own eyes before final delivery, and never delete existing rendered videos when cleaning scratch files.

@@ -37,7 +37,8 @@
           "endSec": { "type": "number", "exclusiveMinimum": 0 },
           "narrativeBeat": {
             "type": "string",
-            "enum": ["HOOK", "SETUP", "TENSION", "EVIDENCE", "REHOOK", "PAYOFF", "CTA"]
+            "description": "Custom beat ID from 01a_edit_grammar.json scriptShape.beatSequence. Must NOT reuse the universal skeleton (HOOK/SETUP/TENSION/EVIDENCE/REHOOK/PAYOFF/CTA) unless customizing it.",
+            "minLength": 3
           },
           "shotScale": {
             "type": "string",
@@ -76,7 +77,7 @@
           "captionsActive": { "type": "boolean" },
           "cameraMove": {
             "type": "object",
-            "required": ["type", "motivation"],
+            "required": ["type", "motivation", "beatId"],
             "properties": {
               "type": {
                 "type": "string",
@@ -85,11 +86,21 @@
                   "DOLLY_IN_INTIMATE",
                   "PULL_BACK_REVEAL",
                   "LATERAL_TRACK",
-                  "RACK_FOCUS_Z"
+                  "RACK_FOCUS_Z",
+                  "WHIP_PAN_SACCADE",
+                  "ORBITAL_ORBIT",
+                  "VERTICAL_DROP",
+                  "CRASH_ZOOM_REVEAL",
+                  "TILT_AROUND_PORTAL"
                 ]
               },
-              "motivation": { "type": "string", "minLength": 3 }
+              "motivation": { "type": "string", "minLength": 3 },
+              "beatId": { "type": "string", "minLength": 3 }
             }
+          },
+          "editGrammarSignature": {
+            "type": "string",
+            "description": "Must match `scriptSignatureHash` from 01a_edit_grammar.json. This prevents copy-paste leakage across scripts."
           },
           "transitionOut": {
             "type": "object",
@@ -103,7 +114,11 @@
                   "L_CUT",
                   "MATCH_CUT",
                   "DIRECTIONAL_WIPE",
-                  "CAMERA_PAN"
+                  "CAMERA_PAN",
+                  "BOKEH_RING_WIPE",
+                  "PORTAL_ZOOM_OUT",
+                  "VELOCITY_MATCH_DISSOLVE",
+                  "GLOW_SWEEP_FRAME"
                 ]
               },
               "durationFrames": { "type": "integer", "minimum": 0, "maximum": 45 }

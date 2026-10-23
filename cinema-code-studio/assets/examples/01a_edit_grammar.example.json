@@ -1,0 +1,47 @@
+{
+  "projectTitle": "Cinema Code Studio Reference Reel",
+  "scriptShape": {
+    "arcName": "Contrarian Reveal",
+    "beatCount": 6,
+    "beatSequence": [
+      "INVERT_PREMISE",
+      "CRITICAL_FLAW",
+      "EXPERIMENT",
+      "BLOWUP",
+      "RECONSTRUCTION",
+      "TRIUMPH"
+    ],
+    "beatDescriptions": {
+      "INVERT_PREMISE": "Flip the assumed benefit on its head to create cognitive dissonance",
+      "CRITICAL_FLAW": "Zoom into the hidden structural failure causing the problem",
+      "EXPERIMENT": "Rapid whip between competing hypotheses to create investigative tension",
+      "BLOWUP": "Everything fails spectacularly to justify the redesign",
+      "RECONSTRUCTION": "Silent rebuild with deliberate camera orbit around the new architecture",
+      "TRIUMPH": "Orbital celebration as the complete system proves itself end-to-end"
+    }
+  },
+  "shotVocabulary": ["EWS", "ECU", "MS", "CU", "WS", "CU", "ECU", "WS", "MS", "EWS"],
+  "cameraMoveVocabulary": [
+    {"type": "CRASH_ZOOM_REVEAL", "motivation": "Crash into the critical flaw to shatter assumptions", "beatId": "CRITICAL_FLAW"},
+    {"type": "WHIP_PAN_SACCADE", "motivation": "Rapid whip between competing options to show investigative tension", "beatId": "EXPERIMENT"},
+    {"type": "TILT_AROUND_PORTAL", "motivation": "Tilt around the portal to reveal the rebuilt world from a new angle", "beatId": "RECONSTRUCTION"},
+    {"type": "ORBITAL_ORBIT", "motivation": "Orbit the hero to celebrate the full system working end-to-end", "beatId": "TRIUMPH"},
+    {"type": "VERTICAL_DROP", "motivation": "Drop vertically into the core mechanism to show the deepest layer", "beatId": "BLOWUP"},
+    {"type": "DOLLY_IN_INTIMATE", "motivation": "Slow intimate push into the reconstructed hero to build emotional connection", "beatId": "RECONSTRUCTION"}
+  ],
+  "transitionVocabulary": ["HARD_CUT", "BOKEH_RING_WIPE", "MATCH_CUT", "PORTAL_ZOOM_OUT", "VELOCITY_MATCH_DISSOLVE", "J_CUT", "L_CUT", "GLOW_SWEEP_FRAME"],
+  "pacingSignature": {
+    "startPace": "IMMEDIATE_CONFRONTATION",
+    "accelerationPoint": "After the counterexample at beat CRITICAL_FLAW",
+    "peakPace": "RAPID_PACING",
+    "breathHoldLocation": "The silent rebuild at RECONSTRUCTION (8.5s single hold)",
+    "endingPace": "IMPACT_RESOLUTION"
+  },
+  "scriptSignatureHash": "INVERT-FLAW-SHADOW-REBUILD-0425",
+  "forbiddenRepetitions": [
+    "No three consecutive CU shots",
+    "No portal-zoom-out on every transition (max 2 per script)",
+    "No BokehRingWipe between every scene (max 3 per script)",
+    "No camera move repeated 3+ times consecutively"
+  ]
+}

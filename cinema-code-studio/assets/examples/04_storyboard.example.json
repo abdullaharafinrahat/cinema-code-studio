@@ -1,97 +1,127 @@
 {
   "projectTitle": "Cinema Code Studio Reference Reel",
   "aspectRatio": "16:9",
-  "fps": 60,
+  "fps": 25,
   "shots": [
     {
       "shotId": "S01",
       "startSec": 0.0,
       "endSec": 2.6,
-      "narrativeBeat": "HOOK",
-      "shotScale": "CU",
-      "compositionGrid": "RULE_OF_THIRDS",
-      "entryFocalPoint": [0.34, 0.44],
-      "exitFocalPoint": [0.38, 0.44],
-      "colorMoodId": "ACT1_GRAPHITE_BRASS",
-      "paletteHexPreview": {
-        "bg": "#141311",
-        "surface": "#201E1B",
-        "hero": "#C8963E",
-        "text": "#EDE7DA"
-      },
-      "visualDescription": "In-medias-res masked Swiss headline on warm matte carbon; aged brass focal rule at right third.",
+      "narrativeBeat": "INVERT_PREMISE",
+      "shotScale": "EWS",
+      "compositionGrid": "CENTER_PUNCH",
+      "entryFocalPoint": [0.50, 0.46],
+      "exitFocalPoint": [0.50, 0.46],
+      "colorMoodId": "ACT1_SAPPHIRE_COBALT_STUDIO",
+      "paletteHexPreview": { "bg": "#040A18", "surface": "#0B1630", "hero": "#1D63ED", "text": "#F8FAFC" },
+      "visualDescription": "In-medias-res bright studio daylight cyclorama with a crash-zoom into a single broken pipeline node.",
       "audioScript": "Every great cut is human psychology—never the software.",
       "onScreenWordCount": 6,
       "cognitiveLoadScore": 1,
       "captionsActive": false,
-      "cameraMove": {
-        "type": "DOLLY_IN_INTIMATE",
-        "motivation": "Pull viewer immediately into thesis tension"
-      },
-      "transitionOut": {
-        "type": "DIRECTIONAL_WIPE",
-        "durationFrames": 14
-      }
+      "cameraMove": { "type": "CRASH_ZOOM_REVEAL", "motivation": "Crash into the critical flaw to shatter assumptions", "beatId": "INVERT_PREMISE" },
+      "editGrammarSignature": "INVERT-FLAW-SHADOW-REBUILD-0425",
+      "transitionOut": { "type": "HARD_CUT", "durationFrames": 0 }
     },
     {
       "shotId": "S02",
       "startSec": 2.6,
       "endSec": 6.26,
-      "narrativeBeat": "EVIDENCE",
-      "shotScale": "MS",
-      "compositionGrid": "ASYMMETRIC_EDITORIAL",
-      "entryFocalPoint": [0.42, 0.48],
-      "exitFocalPoint": [0.50, 0.50],
-      "colorMoodId": "ACT1_GRAPHITE_BRASS",
-      "paletteHexPreview": {
-        "bg": "#141311",
-        "surface": "#201E1B",
-        "hero": "#C8963E",
-        "text": "#EDE7DA"
-      },
-      "visualDescription": "Muted pewter baseline bar settles at 48 min while matte aged-brass hero bar locks at 4 min.",
+      "narrativeBeat": "CRITICAL_FLAW",
+      "shotScale": "ECU",
+      "compositionGrid": "RULE_OF_THIRDS",
+      "entryFocalPoint": [0.34, 0.44],
+      "exitFocalPoint": [0.68, 0.38],
+      "colorMoodId": "ACT1_SAPPHIRE_COBALT_STUDIO",
+      "paletteHexPreview": { "bg": "#040A18", "surface": "#0B1630", "hero": "#1D63ED", "text": "#F8FAFC" },
+      "visualDescription": "Extreme close-up of a single NLE clip block snapping out of sync on the timeline, revealing the hidden structural failure.",
       "audioScript": "When structure, eye-trace, and 60-30-10 color are mathematical, iteration drops tenfold.",
       "onScreenWordCount": 9,
       "cognitiveLoadScore": 2,
       "captionsActive": false,
-      "cameraMove": {
-        "type": "LATERAL_TRACK",
-        "motivation": "Follow horizontal bar progression toward centered payoff"
-      },
-      "transitionOut": {
-        "type": "HARD_CUT",
-        "durationFrames": 0
-      }
+      "cameraMove": { "type": "DOLLY_IN_INTIMATE", "motivation": "Slow intimate push into the reconstructed hero to build emotional connection", "beatId": "CRITICAL_FLAW" },
+      "editGrammarSignature": "INVERT-FLAW-SHADOW-REBUILD-0425",
+      "transitionOut": { "type": "BOKEH_RING_WIPE", "durationFrames": 14 }
     },
     {
       "shotId": "S03",
       "startSec": 6.26,
       "endSec": 9.76,
-      "narrativeBeat": "PAYOFF",
+      "narrativeBeat": "EXPERIMENT",
+      "shotScale": "MS",
+      "compositionGrid": "ASYMMETRIC_EDITORIAL",
+      "entryFocalPoint": [0.22, 0.35],
+      "exitFocalPoint": [0.68, 0.50],
+      "colorMoodId": "ACT1_SAPPHIRE_COBALT_STUDIO",
+      "paletteHexPreview": { "bg": "#040A18", "surface": "#0B1630", "hero": "#1D63ED", "text": "#F8FAFC" },
+      "visualDescription": "Two competing hypotheses whip-snap across the frame, each dissolving before settling on the correct approach.",
+      "audioScript": "The brain reads the cut before the eye finishes moving—that's why the invisible edit wins.",
+      "onScreenWordCount": 8,
+      "cognitiveLoadScore": 2,
+      "captionsActive": false,
+      "cameraMove": { "type": "WHIP_PAN_SACCADE", "motivation": "Rapid whip between competing options to show investigative tension", "beatId": "EXPERIMENT" },
+      "editGrammarSignature": "INVERT-FLAW-SHADOW-REBUILD-0425",
+      "transitionOut": { "type": "MATCH_CUT", "durationFrames": 8 }
+    },
+    {
+      "shotId": "S04",
+      "startSec": 9.76,
+      "endSec": 13.26,
+      "narrativeBeat": "BLOWUP",
       "shotScale": "CU",
       "compositionGrid": "CENTER_PUNCH",
       "entryFocalPoint": [0.50, 0.46],
+      "exitFocalPoint": [0.50, 0.60],
+      "colorMoodId": "ACT2_HERO_LIME_PAYOFF",
+      "paletteHexPreview": { "bg": "#040A18", "surface": "#0B1630", "hero": "#84CC16", "text": "#F8FAFC" },
+      "visualDescription": "The entire timeline explodes into 12 glaring cards as the old system shatters, the single hero node remaining in shadow.",
+      "audioScript": "Ninety percent of what you see is discipline—letting go of what doesn't serve the cut.",
+      "onScreenWordCount": 7,
+      "cognitiveLoadScore": 3,
+      "captionsActive": false,
+      "cameraMove": { "type": "VERTICAL_DROP", "motivation": "Drop vertically into the core mechanism to show the deepest layer", "beatId": "BLOWUP" },
+      "editGrammarSignature": "INVERT-FLAW-SHADOW-REBUILD-0425",
+      "transitionOut": { "type": "PORTAL_ZOOM_OUT", "durationFrames": 16 }
+    },
+    {
+      "shotId": "S05",
+      "startSec": 13.26,
+      "endSec": 21.76,
+      "narrativeBeat": "RECONSTRUCTION",
+      "shotScale": "WS",
+      "compositionGrid": "RULE_OF_THIRDS",
+      "entryFocalPoint": [0.50, 0.46],
       "exitFocalPoint": [0.50, 0.46],
-      "colorMoodId": "ACT3_TERRACOTTA_BONE",
-      "paletteHexPreview": {
-        "bg": "#EFE9DD",
-        "surface": "#E3DCCD",
-        "hero": "#B8432A",
-        "text": "#181613"
-      },
-      "visualDescription": "After 12-frame silence drop, polarity inverts to warm museum paper (#EFE9DD) with Braun terracotta +340% focal print.",
-      "audioScript": "Delivering three hundred forty percent stronger audience retention.",
-      "onScreenWordCount": 4,
+      "colorMoodId": "ACT2_HERO_LIME_PAYOFF",
+      "paletteHexPreview": { "bg": "#040A18", "surface": "#0B1630", "hero": "#84CC16", "text": "#F8FAFC" },
+      "visualDescription": "The entire frame drops to 8% shadow as a single GlowSweepFrame hero viewport commands the room, connected to three frosted glass nodes via orthogonal SVG spines.",
+      "audioScript": "One hero commands. Zero competing glare. Every node earns its place or it disappears.",
+      "onScreenWordCount": 5,
+      "cognitiveLoadScore": 2,
+      "captionsActive": false,
+      "cameraMove": { "type": "TILT_AROUND_PORTAL", "motivation": "Tilt around the portal to reveal the rebuilt world from a new angle", "beatId": "RECONSTRUCTION" },
+      "editGrammarSignature": "INVERT-FLAW-SHADOW-REBUILD-0425",
+      "transitionOut": { "type": "GLOW_SWEEP_FRAME", "durationFrames": 12 }
+    },
+    {
+      "shotId": "S06",
+      "startSec": 21.76,
+      "endSec": 26.26,
+      "narrativeBeat": "TRIUMPH",
+      "shotScale": "EWS",
+      "compositionGrid": "CENTER_PUNCH",
+      "entryFocalPoint": [0.50, 0.46],
+      "exitFocalPoint": [0.50, 0.46],
+      "colorMoodId": "ACT3_DAYLIGHT_CYCLORAMA_FINALE",
+      "paletteHexPreview": { "bg": "#F4F8FE", "surface": "#E2ECFC", "hero": "#1D63ED", "text": "#0A1224" },
+      "visualDescription": "Bright studio daylight reveal with React, TypeScript, FFmpeg, and GitHub icons orbiting the final Studio Display, with the 'Cinema by design.' lockup.",
+      "audioScript": "Great editing isn't software—it's 60 milliseconds of human perception engineered by design.",
+      "onScreenWordCount": 6,
       "cognitiveLoadScore": 1,
       "captionsActive": false,
-      "cameraMove": {
-        "type": "STATIC_BREATH",
-        "motivation": "Deliberate breath hold letting thesis payoff land with authority"
-      },
-      "transitionOut": {
-        "type": "HARD_CUT",
-        "durationFrames": 0
-      }
+      "cameraMove": { "type": "ORBITAL_ORBIT", "motivation": "Orbit the hero to celebrate the full system working end-to-end", "beatId": "TRIUMPH" },
+      "editGrammarSignature": "INVERT-FLAW-SHADOW-REBUILD-0425",
+      "transitionOut": { "type": "VELOCITY_MATCH_DISSOLVE", "durationFrames": 10 }
     }
   ]
 }

@@ -18,6 +18,8 @@ import math
 import sys
 from pathlib import Path
 
+UNIVERSAL_SKELETON_BEATS = {"HOOK", "SETUP", "TENSION", "EVIDENCE", "REHOOK", "PAYOFF", "CTA"}
+
 
 def audit_retention(storyboard_path: Path, timeline_path: Path | None = None) -> dict:
     sb = json.loads(storyboard_path.read_text(encoding="utf-8"))
@@ -38,8 +40,13 @@ def audit_retention(storyboard_path: Path, timeline_path: Path | None = None) ->
     first = shots[0]
     if first["startSec"] != 0:
         errors.append(f"S01 must start at 0.0s (got {first['startSec']}s) — zero dead lead-in allowed.")
-    if first.get("narrativeBeat") != "HOOK":
-        errors.append(f"S01 `narrativeBeat` must be 'HOOK' (got '{first.get('narrativeBeat')}').")
+    if first.get("narrativeBeat") not in UNIVERSAL_SKELETON_BEATS and first["startSec"] == 0.0:
+        warnings.append(
+            f"S01 uses custom beat '{first.get('narrativeBeat')}' instead of 'HOOK'. "
+            "This is valid for script-specific grammars (Gate 1.5) — ensure the custom beat serves as the in-medias-res hook."
+        )
+    elif first.get("narrativeBeat") != "HOOK":
+        errors.append(f"S01 `narrativeBeat` must be 'HOOK' or a custom Gate 1.5 beat (got '{first.get('narrativeBeat')}').")
     if (first["endSec"] - first["startSec"]) > 3.5:
         warnings.append(
             f"S01 hook shot lasts {round(first['endSec'] - first['startSec'], 2)}s (> 3.5s). "
@@ -47,7 +54,6 @@ def audit_retention(storyboard_path: Path, timeline_path: Path | None = None) ->
         )
 
     durations: list[float] = []
-    prev_scale = None
 
     for idx, shot in enumerate(shots):
         sid = shot["shotId"]
@@ -85,15 +91,40 @@ def audit_retention(storyboard_path: Path, timeline_path: Path | None = None) ->
                 "Add a micro-shift, dolly push, or progressive layer reveal."
             )
 
-        # 5. Same-scale jump cut warning
-        scale = shot.get("shotScale")
-        trans = shot.get("transitionOut", {}).get("type", "HARD_CUT")
-        if prev_scale == scale and idx > 0 and shots[idx - 1].get("transitionOut", {}).get("type") == "HARD_CUT":
-            warnings.append(
-                f"[{shots[idx - 1]['shotId']} -> {sid}] Back-to-back `{scale}` shots on HARD_CUT. "
-                "Verify camera angle or visual stage changes so it doesn't feel like an unmasked jump cut."
-            )
-        prev_scale = scale
+    # 5. Same-scale jump cut error (3+ consecutive same scale = same edit leak)
+    scales = [shot.get("shotScale", "CU") for shot in shots]
+    consecutive_scale = 1
+    for i in range(1, len(scales)):
+        if scales[i] == scales[i - 1]:
+            consecutive_scale += 1
+            if consecutive_scale >= 3:
+                errors.append(
+                    f"Shot scale '{scales[i]}' repeats {consecutive_scale + 1} times consecutively "
+                    f"({shots[i - 2]['shotId']}..{shots[i]['shotId']}). This causes 'same edit' leakage — "
+                    "every cut must change perspective by at least 14%."
+                )
+                consecutive_scale = 1
+        else:
+            consecutive_scale = 1
+
+    # 6. Camera move diversity (no 3 consecutive same move)
+    move_types = [
+        shot.get("cameraMove", {}).get("type", "STATIC_BREATH")
+        for shot in shots
+    ]
+    consecutive_move = 1
+    for i in range(1, len(move_types)):
+        if move_types[i] == move_types[i - 1]:
+            consecutive_move += 1
+            if consecutive_move >= 3:
+                errors.append(
+                    f"Camera move '{move_types[i]}' repeats {consecutive_move + 1} times consecutively "
+                    f"({shots[i - 2]['shotId']}..{shots[i]['shotId']}). Vary camera rigs — each shot must be "
+                    "motivated by the script beat."
+                )
+                consecutive_move = 1
+        else:
+            consecutive_move = 1
 
     # 6. Asymmetric Editorial Rhythm check (variance of shot durations)
     rhythm_std = 0.0

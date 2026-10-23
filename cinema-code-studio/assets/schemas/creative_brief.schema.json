@@ -47,6 +47,53 @@
         "CUSTOM_AUTEUR"
       ]
     },
+    "editGrammar": {
+      "type": "object",
+      "description": "Gate 1.5 Script Shape & Edit Grammar. Extracts THIS script's unique narrative arc and generates a per-script shot vocabulary, camera-move sequence, transition vocabulary, and pacing signature. This is what makes every edit uniquely identifiable.",
+      "required": ["arcName", "scriptSignatureHash"],
+      "properties": {
+        "arcName": {
+          "type": "string",
+          "description": "A human-readable name for this script's narrative shape (e.g., 'Contrarian Reveal', 'Teardown-Rebuild', 'Hero-Villain-Resolution').",
+          "minLength": 3
+        },
+        "scriptSignatureHash": {
+          "type": "string",
+          "description": "Deterministic hash or short phrase that uniquely identifies this edit's grammar.",
+          "minLength": 5
+        },
+        "beatCount": { "type": "integer", "minimum": 4, "maximum": 12 },
+        "beatSequence": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 12,
+          "description": "Custom beat IDs for THIS script — NOT the universal skeleton."
+        },
+        "shotVocabulary": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 12
+        },
+        "cameraMoveVocabulary": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 10
+        },
+        "transitionVocabulary": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 8
+        },
+        "pacingSignature": {
+          "type": "object",
+          "required": ["startPace", "accelerationPoint", "peakPace", "breathHoldLocation", "endingPace"]
+        },
+        "forbiddenRepetitions": {
+          "type": "array",
+          "description": "Explicit patterns that this script must NOT repeat."
+        }
+      }
+    },
     "assetStrategy": {
       "type": "object",
       "description": "Mixed-media sourcing plan: prefer verified real photography and authentic brand SVGs over naked CSS/3D shapes.",

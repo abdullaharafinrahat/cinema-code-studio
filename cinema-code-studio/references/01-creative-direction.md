@@ -18,6 +18,31 @@ Viewers do not remember feature lists or facts; they remember **emotional state 
 
 ---
 
+## 1.5 Script Shape & Edit Grammar (Gate 1.5)
+
+**The "Same Edit" Problem**: When you use the skill with different scripts and get identical edits (assets differ but structure is the same), the root cause is NOT the Creative Director — it's a **fixed narrative skeleton** at the schema level. The `narrativeBeat` enum (`HOOK/SETUP/TENSION/EVIDENCE/REHOOK/PAYOFF/CTA`), the 5 shot scales (`ECU/CU/MS/WS/EWS`), the 5 camera moves (`STATIC_BREATH/DOLLY_IN_INTIMATE/PULL_BACK_REVEAL/LATERAL_TRACK/RACK_FOCUS_Z`), and the 6 transition types (`HARD_CUT/J_CUT/L_CUT/MATCH_CUT/DIRECTIONAL_WIPE/CAMERA_PAN`) are all universal vocabularies. When you reuse them across scripts, you get the same 7-beat arc with the same 5 shot scales and the same 5 camera moves — the edit looks identical even when photos/SVGs change.
+
+**The Fix**: Before storyboarding (Gate 5), extract THIS script's unique narrative arc and generate a **per-script shot vocabulary**, **camera-move sequence**, **transition vocabulary**, and **pacing signature** in `preprod/01a_edit_grammar.json`. This is the missing "Script Shape Extraction" layer between Creative Direction and Storyboard.
+
+### What to Extract
+
+| Field | What It Is | Example |
+|:---|:---|:---|
+| `scriptShape.arcName` | The script's unique narrative shape | "Contrarian Reveal" |
+| `scriptShape.beatSequence` | Custom beat IDs for THIS script | `["INVERT_PREMISE", "CRITICAL_FLAW", "EXPERIMENT", "BLOWUP", "RECONSTRUCTION", "TRIUMPH"]` |
+| `shotVocabulary` | Per-script shot-scale sequence (must alternate) | `["EWS", "ECU", "MS", "CU", "WS", "CU", "ECU", "WS", "MS", "EWS"]` |
+| `cameraMoveVocabulary` | Per-script camera moves (each with unique motivation) | 8 distinct moves tied to script beats |
+| `transitionVocabulary` | Per-script transition types (no 2 consecutive same) | 6 distinct transitions |
+| `pacingSignature` | Rhythmic DNA: start, acceleration, peak, breath hold, ending | `IMMEDIATE_CONFRONTATION → RAPID_PACING → 8.5s breath hold → IMPACT_RESOLUTION` |
+| `scriptSignatureHash` | Deterministic hash locking THIS grammar | `"INVERT-FLAW-SHADOW-REBUILD-0425"` |
+| `forbiddenRepetitions` | Explicit bans on leakage patterns | `["No three consecutive CU shots", "No portal-zoom-out on every transition"]` |
+
+Every shot in `04_storyboard.json` must carry `editGrammarSignature` matching this hash. The `audit_edit_diversity.py` validator enforces all uniqueness rules at Gate 5.5.
+
+**Never default to the universal skeleton.** If your script is about "why X is broken," define `INVERT_PREMISE → CRITICAL_FLAW → EXPERIMENT → BLOWUP → RECONSTRUCTION → TRIUMPH`. If it's about "how X works," define `SUPERFICIAL_ASPECT → SURPRISE_INSIGHT → LAYER_PEEL → CORE_MECHANISM → FAMILIAR_APPLICATION`. The arc name, beat IDs, shot sequence, camera moves, and pacing signature must be **unique to this script** — that's what makes the edit look different.
+
+---
+
 ## 2. Selecting ONE Cohesive Visual World
 
 Amateur AI videos fail because Scene 1 looks like dark cyberpunk, Scene 2 uses corporate flat icons, and Scene 3 looks like a pastel Notion doc. Lock **one** visual world for the entire runtime:

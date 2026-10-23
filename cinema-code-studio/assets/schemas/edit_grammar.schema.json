@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cinema-code-studio.local/schemas/edit_grammar.schema.json",
+  "title": "CinemaCodeStudioEditGrammar",
+  "description": "Gate 1.5 Script Shape & Edit Grammar: extracts the script's unique narrative arc and generates a per-script shot vocabulary, camera-move sequence, transition vocabulary, and pacing signature. This is what makes every edit uniquely identifiable — never reuse the same grammar across two scripts.",
+  "type": "object",
+  "required": [
+    "projectTitle",
+    "scriptShape",
+    "shotVocabulary",
+    "cameraMoveVocabulary",
+    "transitionVocabulary",
+    "pacingSignature",
+    "scriptSignatureHash"
+  ],
+  "properties": {
+    "projectTitle": { "type": "string", "minLength": 2 },
+    "scriptShape": {
+      "type": "object",
+      "description": "The script's unique narrative arc — NOT the universal HOOK/SETUP/TENSION/EVIDENCE/PAYOFF/CTA skeleton. Describe the specific shape this script takes.",
+      "required": ["arcName", "beatCount", "beatSequence", "beatDescriptions"],
+      "properties": {
+        "arcName": {
+          "type": "string",
+          "description": "A human-readable name for this script's narrative shape (e.g., 'Contrarian Reveal', 'Teardown-Rebuild', 'Hero-Villain-Resolution').",
+          "minLength": 3
+        },
+        "beatCount": { "type": "integer", "minimum": 4, "maximum": 12 },
+        "beatSequence": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 12,
+          "description": "Custom beat IDs for THIS script — NOT the fixed HOOK/SETUP/TENSION enum. Examples: 'INVERT_PREMISE', 'CRITICAL_FLAW', 'EXPERIMENT', 'BLOWUP', 'RECONSTRUCTION'.",
+          "items": { "type": "string", "minLength": 3 }
+        },
+        "beatDescriptions": {
+          "type": "object",
+          "description": "Map of each beat ID to a one-line description of what happens in that beat.",
+          "additionalProperties": { "type": "string", "minLength": 5 }
+        }
+      }
+    },
+    "shotVocabulary": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 12,
+      "description": "The specific sequence of shot scales for THIS script. Must alternate — no three consecutive shots at the same scale.",
+      "items": {
+        "type": "string",
+        "enum": ["ECU", "CU", "MS", "WS", "EWS"]
+      }
+    },
+    "cameraMoveVocabulary": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 10,
+      "description": "Distinct camera moves for THIS script. Each must have a unique motivation tied to the script's beat.",
+      "items": {
+        "type": "object",
+        "required": ["type", "motivation", "beatId"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "STATIC_BREATH",
+              "DOLLY_IN_INTIMATE",
+              "PULL_BACK_REVEAL",
+              "LATERAL_TRACK",
+              "RACK_FOCUS_Z",
+              "WHIP_PAN_SACCADE",
+              "ORBITAL_ORBIT",
+              "VERTICAL_DROP",
+              "CRASH_ZOOM_REVEAL",
+              "TILT_AROUND_PORTAL"
+            ]
+          },
+          "motivation": { "type": "string", "minLength": 10 },
+          "beatId": { "type": "string", "minLength": 3 }
+        }
+      }
+    },
+    "transitionVocabulary": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 8,
+      "description": "Distinct transition types for THIS script. No two consecutive transitions may share the same type.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "HARD_CUT",
+          "J_CUT",
+          "L_CUT",
+          "MATCH_CUT",
+          "DIRECTIONAL_WIPE",
+          "CAMERA_PAN",
+          "BOKEH_RING_WIPE",
+          "PORTAL_ZOOM_OUT",
+          "VELOCITY_MATCH_DISSOLVE",
+          "GLOW_SWEEP_FRAME"
+        ]
+      }
+    },
+    "pacingSignature": {
+      "type": "object",
+      "description": "The rhythmic DNA of this edit — how fast/slow it starts, where it accelerates, where it breathes.",
+      "required": ["startPace", "accelerationPoint", "peakPace", "breathHoldLocation", "endingPace"],
+      "properties": {
+        "startPace": {
+          "type": "string",
+          "enum": ["CONSTANT_PROPULSION", "SLOW_BUILD_CRITIC", "IMMEDIATE_CONFRONTATION", "CRYPTIC_MYSTERY", "FEELING_INTIMATE"]
+        },
+        "accelerationPoint": { "type": "string", "description": "At which beat the cut rate increases (e.g., 'After the first counterexample at beat 3')." },
+        "peakPace": {
+          "type": "string",
+          "enum": ["STROBOSCOPIC_TRIPLETS", "RAPID_PACING", "MIXED_PACING", "RUSH_AND_SLOW", "SLOW_HOLD"]
+        },
+        "breathHoldLocation": { "type": "string", "description": "Which beat gets the longest single-shot hold for emotional impact (e.g., 'The silent rebuild at the climax')." },
+        "endingPace": {
+          "type": "string",
+          "enum": ["IMPACT_RESOLUTION", "SOAKING_DAWN", "EXPANSION_AND_SHIFT", "RETURN_TO_THESIS"]
+        }
+      }
+    },
+    "scriptSignatureHash": {
+      "type": "string",
+      "description": "A deterministic hash or short phrase that uniquely identifies this edit's grammar. Must differ from any other script's signature. Example: 'INVERT-FLAW-SHADOW-REBUILD-0425'."
+    },
+    "forbiddenRepetitions": {
+      "type": "array",
+      "description": "Explicit patterns from the universal skeleton that this script must NOT repeat. Used to prevent 'same edit' leakage.",
+      "items": {
+        "type": "string",
+        "description": "e.g., 'No three consecutive CU shots', 'No portal-zoom-out on every transition', 'No BokehRingWipe between every scene'."
+      }
+    }
+  }
+}
