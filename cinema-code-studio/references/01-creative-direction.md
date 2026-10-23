@@ -22,6 +22,12 @@ Viewers do not remember feature lists or facts; they remember **emotional state 
 
 Amateur AI videos fail because Scene 1 looks like dark cyberpunk, Scene 2 uses corporate flat icons, and Scene 3 looks like a pastel Notion doc. Lock **one** visual world for the entire runtime:
 
+### Archetype 0 (Flagship Commercial): `COMMERCIAL_MIXED_MEDIA` (`25 fps`)
+* **Atmosphere**: Deep cinema sapphire/obsidian (`#040A18`) paired with high-contrast studio daylight cycloramas (`#F8FAFC`), electric cinema cobalt (`#1D63ED`), and tactile indicator lime (`#84CC16`) — **strictly 0% purple/violet and 0% raw neon**.
+* **5–8 Mixed-Media Layers Per Shot**: Real verified photography & cutouts, authentic brand/software vector SVGs (`React`, `TypeScript`, `FFmpeg`, `DaVinci`, `GitHub`, `Apple`), tactile NLE/CLI product chrome, `<GlowSweepFrame>` animated perimeter corner light-sweeps, `<OrthogonalNodeTree>` frosted glass callouts, `<StudioCursor>` micro-interactions, and `<BokehRingWipe>` foreground blurred ring-light transitions.
+* **Camera Character**: Heavy continuous virtual camera movement at `25 fps` — recursive `<PortalZoomStage>` "World-Inside-World" zoom-outs with velocity blur, 3D perspective tilts (`rotateY(-13deg) rotateX(6deg)`), and rapid saccade whip-pans. Zero parked/static objects.
+* **Best For**: High-craft product commercials, dev-tool launches, SaaS hero films, flagship explainers.
+
 ### Archetype A: `SWISS_EDITORIAL_DARK`
 * **Atmosphere**: Deep obsidian charcoal (`oklch(0.15 0.01 260)`), crisp hairline `1px` structural grids (`rgba(255,255,255,0.08)`), generous negative space (`>= 45%` open canvas).
 * **Typography**: High-contrast serif or neo-grotesque display (`Instrument Serif` / `Inter Tight`) + crisp tabular mono (`JetBrains Mono`) for data/labels.
@@ -48,7 +54,23 @@ Amateur AI videos fail because Scene 1 looks like dark cyberpunk, Scene 2 uses c
 
 ---
 
-## 3. The Kuleshov Subtext Law (Zero Literal Clichés)
+## 3. Mixed-Media Asset Sourcing & Visual Verification Law (Gate 4)
+
+Never generate AI images for everything, and never build off-topic abstract CSS/3D geometric structures (`torus`, `icosahedron`, wireframe spheres) when literal real-world visuals exist!
+
+1. **Fetch Authentic Online Assets First**:
+   * **Brand & Software Logos**: Fetch genuine vector SVGs (e.g., `https://cdn.simpleicons.org/<slug>/<hex>` or official press kits) into `remotion/public/assets/icons/`. Never hand-draw crude approximations of known logos.
+   * **Real Topic Photography**: Search and fetch high-resolution real photographs matching the script's literal subject (color grading suites, film sets, macro human iris, hardware setups) into `remotion/public/assets/photos/`.
+2. **Generate Bespoke Studio Plates Only When Required**:
+   * Use studio image generation strictly for specialized plates that cannot be sourced cleanly online (e.g., pure `#FFFFFF` cyclorama silhouettes for recursive NLE zoom-outs, or matched gaze-aligned portrait pairs).
+3. **Mandatory Visual Verification Before Compositing (`verify_mixed_media_assets.py` + Eye Inspection)**:
+   * Run `python3 scripts/verify_mixed_media_assets.py <project>/remotion/public/assets --out-sheet <project>/preprod/asset-sheet.jpg` AND visually inspect every candidate image!
+   * Reject watermarks, off-topic stock clichés, purple/neon color casts, or AI generation artifacts (e.g., duplicated side skulls/limbs—crop or isolate cleanly onto pure `#000000` for `mixBlendMode: "screen"` compositing and re-verify visually!).
+   * **Never Ship "AI-Slop" Structural Tropes**: Strictly ban 4-column rectangular SaaS card grids, rounded pill-badge soup, and fake sci-fi HUD strings (`CHANNEL 01`, `TC 00:00`, `SIGNAL CORE`, `SYS_READY`).
+
+---
+
+## 4. The Kuleshov Subtext Law (Zero Literal Clichés)
 
 Lev Kuleshov proved that meaning arises from the **collision between audio and visual**, not duplication.
 
@@ -66,9 +88,10 @@ Lev Kuleshov proved that meaning arises from the **collision between audio and v
 
 ---
 
-## 4. Typography & Spatial Discipline
+## 5. Typography & Spatial Discipline
 
-1. **Two-Font Ceiling**: Select `displayFont` (headlines/statements) and `utilityFont` (captions, metrics, UI labels). Never introduce a third font.
+1. **Preloaded Google/Local Fonts Mandatory (`src/fonts.ts`)**: Never write `fontFamily: "Inter, sans-serif"` without loading the font via `@remotion/google-fonts` or `@remotion/fonts`—headless Linux containers lack system UI fonts and silently fall back to `DejaVu Sans`.
+2. **Two-Font Ceiling**: Select `displayFont` (e.g. `Space Grotesk` 700) and `editorialFont` (e.g. `Instrument Serif` Regular/Italic). Never introduce a third font.
 2. **Three-Size Ceiling Per Frame**: Any single frame may contain at most **Hero Display**, **Supporting Subhead**, and **Micro Metadata/Label**.
 3. **Tabular Numerals Mandatory**: Every animated counter, timestamp, currency, or chart axis must set `fontVariantNumeric: "tabular-nums"` so digits never jitter horizontally while counting.
 4. **Negative Space Floor**: At least **40% of frame area** in motion-graphic scenes must remain uncluttered background/atmosphere. Crowded frames look cheap and destroy retention.

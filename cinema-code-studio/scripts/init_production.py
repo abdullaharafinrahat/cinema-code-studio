@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Gate 0/1 Workspace Initializer for Cinema Code Studio.
-Scaffolds a complete production directory (`preprod/`, `remotion/`, `audio/`, `out/`)
-by copying the bundled Remotion Studio starter and psychoacoustic SFX kit.
+Gate 0/1 Workspace Initializer for Cinema Code Studio v4.
+Scaffolds a complete production directory (`preprod/`, `remotion/public/assets/{photos,icons}`, `out/`)
+by copying the bundled Remotion 4.0.538 + React 19 Commercial Studio starter and psychoacoustic SFX kit.
 """
 
 from __future__ import annotations
@@ -22,10 +22,12 @@ def init_production(target_dir: Path, title: str, width: int, height: int, fps: 
     preprod_dir = target_dir / "preprod"
     remotion_dir = target_dir / "remotion"
     public_media_dir = remotion_dir / "public" / "media"
+    public_photos_dir = remotion_dir / "public" / "assets" / "photos"
+    public_icons_dir = remotion_dir / "public" / "assets" / "icons"
     public_sfx_dir = remotion_dir / "public" / "sfx"
     out_dir = target_dir / "out"
 
-    for d in (preprod_dir, public_media_dir, public_sfx_dir, out_dir):
+    for d in (preprod_dir, public_media_dir, public_photos_dir, public_icons_dir, public_sfx_dir, out_dir):
         d.mkdir(parents=True, exist_ok=True)
 
     if template_dir.exists():
@@ -55,17 +57,23 @@ def init_production(target_dir: Path, title: str, width: int, height: int, fps: 
             "toState": "Resolved clarity and conviction",
             "coreThesis": "Single unforgettable takeaway sentence",
         },
-        "visualWorld": "SWISS_EDITORIAL_DARK",
-        "kuleshovStrategy": "Show concrete causal evidence instead of literal noun icons.",
+        "visualWorld": "COMMERCIAL_MIXED_MEDIA",
+        "assetStrategy": {
+            "verifiedBrandIcons": ["react.svg", "typescript.svg", "ffmpeg.svg"],
+            "verifiedWebPhotos": ["Fetch real topic photography & visually inspect before compositing"],
+            "bespokeStudioPlates": ["Generate only when real assets do not exist; visually verify zero artifacts"],
+        },
+        "kuleshovStrategy": "Combine 5-8 literal mixed-media layers per shot (real photography, authentic brand SVGs, tactile UI) instead of naked geometric shapes.",
         "typography": {
-            "displayFont": "Inter Tight",
-            "utilityFont": "JetBrains Mono",
+            "displayFont": "Space Grotesk",
+            "utilityFont": "Instrument Serif",
             "tabularNumerals": True,
         },
         "antiGoals": [
-            "No fade-in from black on Frame 0",
-            "No literal stock icons (clocks, lightbulbs, padlocks)",
-            "No raw #FFFFFF stickers over footage",
+            "Zero purple/violet/magenta or raw neon pigments (no AI-slop glow)",
+            "Zero naked geometric CSS/3D shapes, SaaS 4-column card grids, or fake HUD strings (CHANNEL 01 / SIGNAL CORE)",
+            "Zero static/parked text or objects — maintain continuous camera motivation and speed-ramps",
+            "Never composite unverified online or AI-generated images without visual inspection",
         ],
     }
 
@@ -82,18 +90,18 @@ def init_production(target_dir: Path, title: str, width: int, height: int, fps: 
         "remotionDir": str(remotion_dir),
         "outDir": str(out_dir),
         "bundledSfx": copied_sfx,
-        "nextGate": "Edit preprod/01_creative_brief.json (Gate 1), then build retention & color script.",
+        "nextGate": "Edit preprod/01_creative_brief.json (Gate 1), source & verify mixed-media assets, then build color script & storyboard.",
     }
     return summary
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Initialize a Cinema Code Studio production workspace.")
+    parser = argparse.ArgumentParser(description="Initialize a Cinema Code Studio v4 production workspace.")
     parser.add_argument("project_dir", type=Path, help="Target directory for the video project")
     parser.add_argument("--title", default="Untitled Studio Film", help="Production title")
     parser.add_argument("--width", type=int, default=1920, help="Frame width in pixels (default: 1920)")
     parser.add_argument("--height", type=int, default=1080, help="Frame height in pixels (default: 1080)")
-    parser.add_argument("--fps", type=int, default=60, choices=[24, 25, 30, 60], help="Frames per second")
+    parser.add_argument("--fps", type=int, default=25, choices=[24, 25, 30, 60], help="Frames per second (default: 25)")
     args = parser.parse_args()
 
     result = init_production(args.project_dir, args.title, args.width, args.height, args.fps)

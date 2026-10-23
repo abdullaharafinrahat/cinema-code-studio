@@ -10,9 +10,10 @@ Remotion renders videos by launching headless Chromium workers in parallel—Wor
 * **Bug**: `transition: "all 0.3s ease"`, Tailwind `transition-transform`, or `@keyframes spin` rely on real-time wall-clock ticks. In headless frame-by-frame capture, frames render out of order with zero elapsed browser time—elements freeze or flicker randomly.
 * **Fix**: Compute 100% of transforms, opacities, colors, and SVG paths from `const frame = useCurrentFrame()` using `spring()` or `interpolate()`.
 
-### Trap 2: Unclamped `interpolate()` Explosion
-* **Bug**: `interpolate(frame, [10, 30], [0, 1])` returns `-0.5` at frame `0` and `5.5` at frame `120`! Opacity wraps weirdly, scales invert upside-down, and elements fly 4,000px off-screen.
-* **Fix**: Always pass `{ extrapolateLeft: "clamp", extrapolateRight: "clamp" }`.
+### Trap 2: Unclamped or Reversed `interpolate()` Crash
+* **Bug 1**: `interpolate(frame, [10, 30], [0, 1])` returns `-0.5` at frame `0` and `5.5` at frame `120`!
+* **Bug 2**: `interpolate(val, [1, 0], [100, 200])` throws a runtime crash (`inputRange must be strictly monotonically increasing`)!
+* **Fix**: Always keep `inputRange` strictly increasing (`[0, 1]`, reversing `outputRange` `[200, 100]` instead!) and always pass `{ extrapolateLeft: "clamp", extrapolateRight: "clamp" }`.
 
 ### Trap 3: HTML `<video>` or `<img>` Instead of Remotion Tags
 * **Bug**: Native `<video>` does not block Chromium's screenshot until the exact frame decode completes, causing black frames or repeated stutter frames. Native `<img>` can screenshot mid-decode.
@@ -39,10 +40,12 @@ Remotion renders videos by launching headless Chromium workers in parallel—Wor
 
 ---
 
-## 2. Three.js & SVG Vector Rules
+## 2. Remotion 4.0.538 + React 19, Motion Blur & Optional Three.js Rules
 
-* **3D Scenes (`@remotion/three`)**: Always wrap 3D content in `<ThreeCanvas width={width} height={height}>` (never `@react-three/fiber`'s `<Canvas>`, which uses `requestAnimationFrame` instead of Remotion's frame clock!). Drive camera/mesh rotation directly from `useCurrentFrame()`.
-* **SVG Path Drawing (`@remotion/paths`)**: Use `evolvePath(progress, svgPathString)` to get `{ strokeDasharray, strokeDashoffset }` for buttery After-Effects-style "Trim Paths" line drawing.
+* **Modern Stack Baseline**: Use `remotion@4.0.538` + `react@^19.1.0` + `@remotion/{cli,google-fonts,motion-blur,paths,shapes,transitions}` (`npx remotion browser ensure` to verify Chrome Headless Shell; on fresh Linux containers ensure `libnspr4` and `libnss3` are present).
+* **Motion Blur (`@remotion/motion-blur`)**: When using `<CameraMotionBlur>` or `<Trail>`, `useCurrentFrame()` MUST be read inside child components of the blur wrapper (never passed down as static props from outside!), and keep `samples` low (`4–6`). Alternatively, apply deterministic velocity-proportional `filter: blur(...)` exclusively during the 12-frame peak of speed-ramps.
+* **3D Scenes (`@remotion/three` — Use ONLY for Context-Literal 3D, Never Abstract Shapes)**: When true 3D is required, install `three@0.186.1` + `@types/three@0.186.0` (note `@types/three` trails minor patch numbers), wrap in `<ThreeCanvas width={width} height={height}>`, and drive all transforms from `useCurrentFrame()`. Note that steep whip-curves (`bezier(0.18, 0.96, 0.24, 1.0)`) cover 75% of Z-distance in the first quarter of the interval—add an intermediate Z-hold keyframe in front of any 3D object before flying past it!
+* **SVG Path Drawing (`@remotion/paths`)**: Use `evolvePath(progress, svgPathString)` for crisp Trim-Path circuit wires and underlines.
 
 ---
 

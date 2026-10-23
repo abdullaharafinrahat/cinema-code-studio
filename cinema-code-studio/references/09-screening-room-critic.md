@@ -48,10 +48,10 @@ Score the contact sheet honestly across all six studio pillars. **Every pillar m
 * **Fail (`< 8`)**: Overlapping unreadable text during cross-dissolves, or 1-frame black flash between clips.
 * **Surgical Fix**: Replace sloppy cross-dissolves on text scenes with clean hard cuts, directional mask wipes, or camera-pan transitions; check `<TransitionSeries>` overlap frame math.
 
-### Axis 5: Color Cohesion & Composite Fusion
-* **Pass (`8–10`)**: Palette follows the `03_color_script.json` arc; graphics over footage use film-shoulder whites and unified grain.
-* **Fail (`< 8`)**: Raw `#FFFFFF` stickers floating starkly over warm camera footage, or inconsistent background shades across scenes.
-* **Surgical Fix**: Route all colors through `oklchPalettes.ts` tokens and ensure `<ColorGradeLayer />` + `<OpticalTexture />` sit at the top of `MasterSequence.tsx`.
+### Axis 5: Color Cohesion, Zero Purple/Neon & Mixed-Media Registration
+* **Pass (`8–10`)**: `maxPurplePct <= 0.25%` across all sampled frames; recursive `<PortalZoomStage>` initial frames show 0px of surrounding NLE/device chrome bleed; zoomed callout cards stay 100% inside `1920x1080` safe margins; split-portrait match cuts align pupils & nose bridge within `1–2px`; `StudioCursor` tips land dead-center on clicked buttons (`[M] MUTE`, `Render 4K`).
+* **Fail (`< 8`)**: Any purple/violet/neon contamination, clipped side callout pills during zoom-ins, misaligned split-face halves, or cursor clicking empty air next to a button.
+* **Surgical Fix**: Scale only the central hero ring/subject while keeping side callout cards anchored in safe zones, multiply inner viewport center offsets by `initialScale`, lock split-bar oscillation within `±1%` of the `50%` nose bridge, and re-verify fixed frames visually!
 
 ### Axis 6: Cognitive Load & Caption Discipline
 * **Pass (`8–10`)**: Captions appear cleanly on speaker shots and step out of the way on dense data/UI takeovers.

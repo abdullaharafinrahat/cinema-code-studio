@@ -10,8 +10,10 @@ In standard HSL, `hsl(60, 100%, 50%)` (pure yellow) has ~93% perceived luminance
 
 In **OKLCH** (`oklch(L C H)`):
 * **`L` (Perceptual Lightness, `0.00` to `1.00`)**: Equal `L` values look equally bright to the human eye regardless of hue!
-* **`C` (Chroma / Saturation, `0.00` to `0.175` Pigment Ceiling)**: Warm carbon/paper neutrals sit at `0.004–0.016`; tactile film/print accents sit at `0.10–0.170`. **Never exceed `C = 0.175`** (high-chroma sRGB neons instantly look like synthetic "AI slop").
-* **`H` (Hue Angle — Analog Pigment Bands)**: `~32°–38°` Braun terracotta/iron-oxide, `~72°–82°` aged brass/Kodak ochre/archival paper, `~135°–155°` muted forest sage. **Strictly forbid purple/violet/magenta (`275°–345°`) and electric neon cyan (`195°–240°` at high `L`/`C`).**
+* **Universal Zero-Purple & Zero-Neon Law**: Across **ALL** studio profiles, **strictly forbid purple/violet/magenta (`275° <= H <= 350°`)** and raw electric neon magenta/cyan/green lasers (`#00FFFF`, `#FF00FF`, `#00FF00`).
+* **Two Approved Studio Pigment Profiles (`"studioProfile"` in `03_color_script.json`)**:
+  1. **`commercial_cobalt` (`COMMERCIAL_MIXED_MEDIA`)**: Deep cinema sapphire/obsidian (`#040A18`), crisp studio daylight cyclorama (`#F8FAFC` / `#E6EFFD`), electric cinema cobalt (`#1D63ED`), and tactile indicator lime (`#84CC16` reserved exclusively for the 10% hero leaf node).
+  2. **`analog_editorial` (`SWISS_EDITORIAL_DARK` / `TACTILE_PAPER_CRAFT`)**: Warm matte carbon (`#141311`), archival silver-gelatin bone (`#EFE9DD`), aged brass (`#C8963E`), Braun terracotta (`#C84B31`), and muted sage (`#6E8B6B`), capped at `C <= 0.175`.
 
 ### The Squint-Test Luminance Ladder (Dark & Light Modes)
 

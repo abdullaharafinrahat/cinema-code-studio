@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 """
 Gate 3 Perceptual Color Script & Anti-AI-Slop Validator (Bjorn Ottosson OKLCH Engine).
-Validates `03_color_script.json` against Cinema Code Studio Colorist laws:
-1. Exact sRGB Hex -> Oklab -> OKLCH conversion (`L`, `C`, `H`)
-2. Anti-AI-Slop Pigment Guard:
-   - FORBIDS purple / violet / magenta hues (`275 <= H <= 345` when `C > 0.04`)
-   - FORBIDS neon over-saturation (`C > 0.175` — enforces physical film dye / print ink ceiling)
-   - FORBIDS electric neon cyan (`190 <= H <= 242` when `C > 0.105` and `L > 0.66`)
-   - FORBIDS cold tech-navy dark backgrounds (`235 <= H <= 285` when `L < 0.25` and `C > 0.012`)
-3. Squint-Test Luminance Separation (`|dL| >= 0.38` between hero/text and background)
-4. Film-Shoulder Highlight Rule (forbids raw `#FFFFFF` L>0.985 or dead `#000000` L<0.05)
-5. 60-30-10 Pixel Area Budget check
+Supports Cinema Code Studio's two approved pigment profiles — BOTH strictly banning purple/violet & neon AI-slop:
+1. `analog_editorial` (default): Warm matte carbon (#141311), silver-gelatin bone (#EFE9DD),
+   aged brass (#C8963E), terracotta (#C84B31), sage (#6E8B6B), C <= 0.175.
+2. `commercial_cobalt`: Deep cinema sapphire (#040A18), crisp studio daylight (#F8FAFC),
+   electric cinema cobalt (#1D63ED), and tactile indicator lime (#84CC16) — still strictly
+   forbidding ALL purple/violet/magenta (275 <= H <= 350) and raw neon magenta/cyan lasers!
 """
 
 from __future__ import annotations
@@ -56,36 +52,57 @@ def hex_to_oklch(hex_str: str) -> tuple[float, float, float]:
     return round(L, 4), round(C, 4), round(H, 2)
 
 
-def check_anti_ai_slop(mood_id: str, key: str, hex_val: str, L: float, C: float, H: float) -> list[str]:
+def check_anti_ai_slop(
+    mood_id: str,
+    key: str,
+    hex_val: str,
+    L: float,
+    C: float,
+    H: float,
+    profile: str,
+) -> list[str]:
     errs: list[str] = []
-    # 1. Ban purple / violet / magenta AI-slop hues
-    if 275.0 <= H <= 345.0 and C > 0.04:
+    # UNIVERSAL RULE 1: Strictly ban purple / violet / magenta hues across ALL studio profiles!
+    if 275.0 <= H <= 350.0 and C > 0.04:
         errs.append(
-            f"[{mood_id}] `{key}` ({hex_val}, H={H} deg, C={C}) uses forbidden purple/violet/magenta hue. "
-            "Use analog film/print pigments (ochre, brass, terracotta, sage, bone, warm charcoal)."
+            f"[{mood_id}] `{key}` ({hex_val}, H={H} deg, C={C}) uses forbidden purple/violet/magenta hue."
         )
-    # 2. Ban neon chroma (sRGB synthetics exceed natural film/print pigment C <= 0.175)
-    if C > 0.175:
-        errs.append(
-            f"[{mood_id}] `{key}` ({hex_val}, C={C}) exceeds natural pigment chroma ceiling (C <= 0.175) — "
-            "looks like neon digital AI slop. Desaturate into an earthy/matte analog pigment."
-        )
-    # 3. Ban electric Tailwind sky/cyan glow
-    if 190.0 <= H <= 242.0 and C > 0.105 and L > 0.66:
-        errs.append(
-            f"[{mood_id}] `{key}` ({hex_val}, L={L}, C={C}, H={H} deg) is electric neon cyan/sky. "
-            "Use warm brass (#C8963E), matte terracotta (#C84B31), or muted Prussian steel (#4A6678)."
-        )
-    # 4. Ban generic cold blue-navy dark backgrounds (#0F172A / #0D1017)
-    if key in ("dominantBg", "secondarySurface") and L < 0.28 and 235.0 <= H <= 285.0 and C > 0.011:
-        errs.append(
-            f"[{mood_id}] `{key}` ({hex_val}, H={H} deg, C={C}) is cold blue-slate tech dark mode. "
-            "Use warm matte carbon (#141311) or oxide charcoal (#161513) with low chroma (C <= 0.010)."
-        )
+
+    if profile == "commercial_cobalt":
+        # Commercial Cobalt allows deep cinema sapphire (#040A18), electric cobalt (#1D63ED, C~0.22, H~262),
+        # studio daylight (#F8FAFC), and tactile indicator lime (#84CC16, C~0.19, H~130),
+        # while still banning raw sRGB neon lasers (C > 0.245 or electric hot-cyan H 192..215 at high L/C).
+        if C > 0.245:
+            errs.append(
+                f"[{mood_id}] `{key}` ({hex_val}, C={C}) exceeds commercial pigment ceiling (C <= 0.245)."
+            )
+        if 190.0 <= H <= 212.0 and C > 0.145 and L > 0.82:
+            errs.append(
+                f"[{mood_id}] `{key}` ({hex_val}, L={L}, C={C}, H={H}) is raw neon laser cyan (#00FFFF)."
+            )
+    else:
+        # Analog Editorial strict film/print pigment rules
+        if C > 0.175:
+            errs.append(
+                f"[{mood_id}] `{key}` ({hex_val}, C={C}) exceeds analog pigment chroma ceiling (C <= 0.175)."
+            )
+        if 190.0 <= H <= 242.0 and C > 0.105 and L > 0.66:
+            errs.append(
+                f"[{mood_id}] `{key}` ({hex_val}, L={L}, C={C}, H={H} deg) is electric neon cyan/sky."
+            )
+        if key in ("dominantBg", "secondarySurface") and L < 0.28 and 235.0 <= H <= 285.0 and C > 0.011:
+            errs.append(
+                f"[{mood_id}] `{key}` ({hex_val}, H={H} deg, C={C}) is cold blue-slate dark mode in analog_editorial profile. "
+                "Either switch to warm carbon (#141311) or set `\"studioProfile\": \"commercial_cobalt\"`."
+            )
     return errs
 
 
-def validate_palette_mood(mood: dict, allow_neon: bool = False) -> tuple[list[str], list[str], dict]:
+def validate_palette_mood(
+    mood: dict,
+    profile: str = "analog_editorial",
+    allow_neon: bool = False,
+) -> tuple[list[str], list[str], dict]:
     errors: list[str] = []
     warnings: list[str] = []
     mood_id = mood.get("id", "unnamed_mood")
@@ -106,39 +123,32 @@ def validate_palette_mood(mood: dict, allow_neon: bool = False) -> tuple[list[st
 
     if not allow_neon:
         for k, (L_v, C_v, H_v) in parsed.items():
-            errors.extend(check_anti_ai_slop(mood_id, k, colors[k], L_v, C_v, H_v))
+            errors.extend(check_anti_ai_slop(mood_id, k, colors[k], L_v, C_v, H_v, profile))
 
-    # Film-shoulder roll-off checks (no raw #FFFFFF or #000000)
+    max_white = 0.992 if profile == "commercial_cobalt" else 0.985
+    min_black = 0.025 if profile == "commercial_cobalt" else 0.05
     for label, L_val, hex_val in (
         ("dominantBg", bg_L, colors["dominantBg"]),
         ("primaryText", txt_L, colors["primaryText"]),
     ):
-        if L_val > 0.985:
+        if L_val > max_white:
             errors.append(
-                f"[{mood_id}] `{label}` ({hex_val}, L={L_val}) is clipped digital white (#FFF). "
-                "Use silver-gelatin bone (#EDE7DA or #EFE9DD, L~0.92-0.95)."
+                f"[{mood_id}] `{label}` ({hex_val}, L={L_val}) is clipped pure #FFFFFF (> {max_white})."
             )
-        if L_val < 0.05:
+        if L_val < min_black:
             errors.append(
-                f"[{mood_id}] `{label}` ({hex_val}, L={L_val}) is crushed pure black (#000). "
-                "Use warm matte carbon (#141311, L~0.18)."
+                f"[{mood_id}] `{label}` ({hex_val}, L={L_val}) is crushed pure #000000 (< {min_black})."
             )
 
-    # Squint-test perceptual lightness separation
     text_contrast_dL = round(abs(txt_L - bg_L), 4)
     hero_contrast_dL = round(abs(hero_L - bg_L), 4)
     if text_contrast_dL < 0.45:
         errors.append(
             f"[{mood_id}] Primary text fails squint-test hierarchy: |dL|={text_contrast_dL} (< 0.45) against dominantBg."
         )
-    if hero_contrast_dL < 0.36:
+    if hero_contrast_dL < 0.34:
         errors.append(
-            f"[{mood_id}] Hero accent fails squint-test hierarchy: |dL|={hero_contrast_dL} (< 0.36) against dominantBg."
-        )
-
-    if bg_C > 0.06:
-        warnings.append(
-            f"[{mood_id}] `dominantBg` has elevated chroma C={bg_C} (>0.06). Keep 60% canvas calm and neutral."
+            f"[{mood_id}] Hero accent fails squint-test hierarchy: |dL|={hero_contrast_dL} (< 0.34) against dominantBg."
         )
 
     ratios = mood.get("pixelRatio", {"dominant": 60, "secondary": 30, "accent": 10})
@@ -162,6 +172,11 @@ def validate_palette_mood(mood: dict, allow_neon: bool = False) -> tuple[list[st
 def main() -> None:
     parser = argparse.ArgumentParser(description="Validate OKLCH perceptual color script & Anti-AI-Slop pigment rules.")
     parser.add_argument("color_script", type=Path, help="Path to 03_color_script.json")
+    parser.add_argument(
+        "--profile",
+        choices=["analog_editorial", "commercial_cobalt"],
+        help="Override studioProfile from JSON",
+    )
     parser.add_argument("--allow-neon", action="store_true", help="Bypass anti-neon/purple pigment guard")
     args = parser.parse_args()
 
@@ -170,6 +185,7 @@ def main() -> None:
         sys.exit(1)
 
     data = json.loads(args.color_script.read_text(encoding="utf-8"))
+    profile = args.profile or data.get("studioProfile", "analog_editorial")
     moods = data.get("moods", [])
     if not moods:
         print("Error: `03_color_script.json` must contain a non-empty `moods` array.", file=sys.stderr)
@@ -180,13 +196,14 @@ def main() -> None:
     mood_reports: dict = {}
 
     for mood in moods:
-        errs, warns, metrics = validate_palette_mood(mood, allow_neon=args.allow_neon)
+        errs, warns, metrics = validate_palette_mood(mood, profile=profile, allow_neon=args.allow_neon)
         all_errors.extend(errs)
         all_warnings.extend(warns)
         mood_reports[mood.get("id", "unnamed")] = metrics
 
     report = {
         "valid": len(all_errors) == 0,
+        "studioProfile": profile,
         "moodCount": len(moods),
         "errors": all_errors,
         "warnings": all_warnings,

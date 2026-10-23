@@ -41,8 +41,10 @@ export const SPRING_PRESETS: Record<
 export const STUDIO_EASINGS = {
   /** Slow coil of tension -> whip midpoint -> sharp lock */
   tensionSnap: Easing.bezier(0.85, 0.0, 0.15, 1.0),
-  /** Silk exit deceleration */
+  /** Commercial 25fps speed-ramp whip & silk deceleration */
   cinemaOut: Easing.bezier(0.16, 1.0, 0.3, 1.0),
+  /** Foreground optical ring-wipe S-curve */
+  commercialSnap: Easing.bezier(0.76, 0.0, 0.24, 1.0),
   /** Gentle anticipation wind-up */
   anticipationIn: Easing.bezier(0.36, 0.0, 0.66, -0.56),
 };

@@ -1,30 +1,24 @@
 {
-  "name": "cinema-code-studio-remotion",
-  "version": "2.0.0",
+  "name": "the-invisible-cut-commercial",
+  "version": "4.0.0",
   "private": true,
-  "description": "Deterministic Post-Production & Motion Graphics Studio powered by Remotion v4",
   "scripts": {
-    "studio": "remotion studio",
-    "render": "remotion render MasterSequence ../out/picture.mp4 --codec=h264 --crf=18",
-    "render:alpha": "remotion render MasterSequence ../out/overlay-alpha.mov --codec=prores --prores-profile=4444 --image-format=png --pixel-format=yuva444p10le",
-    "typecheck": "tsc --noEmit"
+    "dev": "remotion studio",
+    "typecheck": "tsc --noEmit",
+    "render": "remotion render MasterSequence ../out/picture_comm.mp4 --codec=h264 --crf=17 --pixel-format=yuv420p"
   },
   "dependencies": {
-    "@react-three/fiber": "8.17.10",
-    "@remotion/cli": "4.0.242",
-    "@remotion/google-fonts": "4.0.242",
-    "@remotion/paths": "4.0.242",
-    "@remotion/three": "4.0.242",
-    "@remotion/transitions": "4.0.242",
-    "@types/three": "0.170.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "remotion": "4.0.242",
-    "three": "0.170.0"
+    "@remotion/cli": "4.0.538",
+    "@remotion/google-fonts": "4.0.538",
+    "@remotion/motion-blur": "4.0.538",
+    "@remotion/paths": "4.0.538",
+    "@remotion/shapes": "4.0.538",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "remotion": "4.0.538"
   },
   "devDependencies": {
-    "@types/react": "18.3.12",
-    "@types/react-dom": "18.3.1",
-    "typescript": "5.6.3"
+    "@types/react": "^19.1.0",
+    "typescript": "^5.8.2"
   }
 }

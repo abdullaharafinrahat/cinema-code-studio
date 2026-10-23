@@ -20,6 +20,17 @@ export interface StudioPalette {
  * - Warm carbon / basalt / archival paper neutrals instead of generic blue-black tech slate
  */
 export const STUDIO_PALETTES: Record<VisualWorldId, StudioPalette> = {
+  COMMERCIAL_MIXED_MEDIA: {
+    id: "COMMERCIAL_MIXED_MEDIA",
+    dominantBg: "#040A18",        // Deep Cinema Sapphire Obsidian (zero purple!)
+    secondarySurface: "#0B1630",  // Frosted Studio Glass Base
+    hairlineBorder: "rgba(147, 197, 253, 0.24)",
+    primaryText: "#F8FAFC",       // Crisp Studio Daylight White
+    mutedContextText: "#94A3B8",  // Calibrated Slate Metadata
+    heroAccent: "#1D63ED",        // Electric Cinema Cobalt
+    heroAccentSoft: "rgba(29, 99, 237, 0.22)",
+    tensionRust: "#84CC16",       // Tactile Indicator Lime (active leaf node)
+  },
   SWISS_EDITORIAL_DARK: {
     id: "SWISS_EDITORIAL_DARK",
     dominantBg: "#141311",        // Warm Matte Carbon — oklch(0.188 0.005 75)

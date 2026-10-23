@@ -46,8 +46,18 @@ Don't waste 20 frames fading every element out symmetrically before every cut! U
 
 ---
 
-## 3. High-Leverage Visual Archetypes (`VisualMetaphorStage.tsx`)
+## 3. Commercial Mixed-Media & Recursive Camera Choreography (`src/commercial/CommercialPrimitives.tsx`)
 
-1. **Continuous 2.5D Canvas (`CameraRig25D`)**: Place Step 1 at `(0, 0)`, Step 2 at `(1400, 120)`, Step 3 at `(2800, -160)` on one giant virtual canvas, connect them with animated SVG Bezier cables, and fly the virtual camera smoothly between coordinates. Viewers grasp spatial relationships instantly.
-2. **Authentic Product / Terminal Surfaces**: Never screenshot blurry JPEGs if you can render crisp React vector UI at `2x` pixel density—show real syntax-highlighted code typing deterministically, real cursor Bezier arcs (never straight diagonal robot lines!), and click ripple compression (`scale: 0.94` on press).
-3. **Comparative Data Tension**: When animating a metric (`+340%` or `12ms vs 480ms`), always render the **baseline/competitor reference bar first**, let it finish, then fire the hero bar past it with `tactile` spring physics and a `tabular-nums` rolling counter.
+High-craft commercial motion graphics require **heavy virtual camera movement** so no text or object sits parked statically in the frame:
+
+1. **Recursive "World-Inside-World" Portal Zooms (`<PortalZoomStage>`)**:
+   * Open full-bleed inside an inner subject (e.g., `initialScale={2.24}` on a `990×500` NLE preview window—remember to multiply inner center `(dx, dy)` by `initialScale` so `initialOffset = [-dx * initialScale, -dy * initialScale]` prevents any surrounding chrome bleed!).
+   * On the beat, speed-ramp zoom out (`14–18 frames` at `25 fps` with `Easing.bezier(0.16, 1, 0.3, 1)` and velocity-proportional `blur(7px)` at mid-ramp) to reveal the full NLE editor, 3×3 cinema monitor wall, or 3D Studio Display!
+2. **Animated Corner Light-Sweeps & Connected Node Trees (`<GlowSweepFrame>` + `<OrthogonalNodeTree>`)**:
+   * Frame hero photography inside `<GlowSweepFrame showReticles>` (tracing a white-hot + cobalt highlight around rounded corners) and wire it via orthogonal SVG spines to frosted `<GlassNodeCard>` pills (`cobalt` → `dark` → `lime` hero payoff).
+3. **Foreground Optical Ring-Light Wipes (`<BokehRingWipe>`)**:
+   * Sweep an out-of-focus `1560px` foreground ring light (`filter: "blur(26px)"`) across major world transitions (`10–14 frames`), switching `<Sequence>` boundaries cleanly at peak ring occlusion.
+4. **Tactile Cursor Micro-Interactions (`<StudioCursor>`)**:
+   * Drive state changes physically—cursor glides along `EASE_COMMERCIAL`, clicks `[M] MUTE MASTER` or `Render 4K` with spring compression (`0.82x` bounce + expanding ripple ring), and triggers immediate visual/acoustic consequence!
+5. **Continuous 2.5D Canvas (`CameraRig25D`) & Comparative Data Tension**:
+   * When animating metrics or comparative baselines, render the baseline first or discipline 90% of competing cards into `8%` blurred shadow so ONE hero viewport commands 100% of viewer attention.

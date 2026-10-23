@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://cinema-code-studio.local/schemas/creative_brief.schema.json",
   "title": "CinemaCodeStudioCreativeBrief",
-  "description": "Gate 1 Creative Director lock: emotional arc, visual world, typography pair, and anti-cliche constraints.",
+  "description": "Gate 1 Creative Director lock: emotional arc, visual world, mixed-media asset strategy, typography pair, and anti-cliche constraints.",
   "type": "object",
   "required": [
     "projectTitle",
@@ -39,12 +39,22 @@
     "visualWorld": {
       "type": "string",
       "enum": [
+        "COMMERCIAL_MIXED_MEDIA",
         "SWISS_EDITORIAL_DARK",
         "TACTILE_PAPER_CRAFT",
         "PRECISION_CINEMA_LAB",
         "KINETIC_PULSE_SOCIAL",
         "CUSTOM_AUTEUR"
       ]
+    },
+    "assetStrategy": {
+      "type": "object",
+      "description": "Mixed-media sourcing plan: prefer verified real photography and authentic brand SVGs over naked CSS/3D shapes.",
+      "properties": {
+        "verifiedBrandIcons": { "type": "array", "items": { "type": "string" } },
+        "verifiedWebPhotos": { "type": "array", "items": { "type": "string" } },
+        "bespokeStudioPlates": { "type": "array", "items": { "type": "string" } }
+      }
     },
     "kuleshovStrategy": {
       "type": "string",

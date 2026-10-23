@@ -1,29 +1,33 @@
 {
-  "projectTitle": "The Invisible Cut",
-  "targetAudience": "Creators, filmmakers, and engineers exploring code-driven cinema",
+  "projectTitle": "The Invisible Cut (Commercial Mixed-Media Edition)",
+  "targetAudience": "Creative directors, film editors, motion designers, and creative engineers",
   "format": {
     "width": 1920,
     "height": 1080,
-    "fps": 60,
-    "targetDurationSec": 23
+    "fps": 25,
+    "targetDurationSec": 36.52
   },
   "emotionalArc": {
-    "fromState": "Intrigue — questioning why great film cuts feel invisible to the conscious mind",
-    "tensionState": "Sensory tension — feeling the visual chaos of broken eye-trace and competing brightness before order snaps in",
-    "toState": "Cinematic awe — visceral payoff as silence, warm gold color shift, and precision typography lock together",
-    "coreThesis": "Great editing is not timeline software; it is deterministic human perception, color hierarchy, and acoustic restraint."
+    "fromState": "Assuming great editing is about timeline tools and software plugins",
+    "tensionState": "Feeling visceral cognitive friction when focal gaze hunts or equal brightness shatters attention",
+    "toState": "Conviction that deterministic code + perceptual craft achieves cinema by design",
+    "coreThesis": "Great editing isn't software—it's 60 milliseconds of human perception engineered by design."
   },
-  "visualWorld": "SWISS_EDITORIAL_DARK",
-  "kuleshovStrategy": "Never show film-reel or scissors clipart. Visualize the actual physics of perception: a 60ms foveal reticle jumping vs locking, 4 competing cards dimming into a 60-30-10 OKLCH prism, and a live acoustic waveform flatlining into dead silence right before the gold climax.",
+  "visualWorld": "COMMERCIAL_MIXED_MEDIA",
+  "assetStrategy": {
+    "verifiedBrandIcons": ["davinci.svg", "react.svg", "typescript.svg", "ffmpeg.svg", "github.svg", "apple.svg"],
+    "verifiedWebPhotos": ["resolve_studio.jpg", "macro_iris.jpg", "broll_set_1.jpg", "broll_set_2.jpg", "broll_silhouette_3.jpg", "broll_fire_5.jpg"],
+    "bespokeStudioPlates": ["editor_silhouette.jpg", "xray_head_clean.jpg", "world_warm_portrait.jpg", "world_cobalt_portrait.jpg"]
+  },
+  "kuleshovStrategy": "5-8 literal mixed-media layers per shot: recursive zoom-outs from studio silhouettes into NLE monitors, clean X-ray cortex wired to a macro iris, pupil-locked split-screen match cuts, and tactile StudioCursor UI clicks.",
   "typography": {
-    "displayFont": "Inter",
-    "utilityFont": "JetBrains Mono",
+    "displayFont": "Space Grotesk",
+    "utilityFont": "Instrument Serif",
     "tabularNumerals": true
   },
   "antiGoals": [
-    "Zero fade-from-black on Frame 0 (start mid-slice at full contrast)",
-    "Zero literal video-editing icons (no clapperboards, film strips, or scissors)",
-    "Zero raw #FFFFFF highlights or uniform scene durations",
-    "Zero bottom subtitle collisions over multi-element visual diagrams"
+    "Zero purple, violet, magenta, or raw neon pigments",
+    "Zero naked CSS/3D geometric shapes, SaaS 4-column card grids, or fake HUD strings",
+    "Zero parked/static text or objects — heavy continuous camera motivation at 25fps"
   ]
 }

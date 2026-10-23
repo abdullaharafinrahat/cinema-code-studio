@@ -1,14 +1,15 @@
 {
-  "projectTitle": "The Invisible Cut",
+  "projectTitle": "The Invisible Cut (Commercial Mixed-Media Edition)",
+  "studioProfile": "commercial_cobalt",
   "moods": [
     {
-      "id": "ACT1_GRAPHITE_BRASS",
-      "narrativeRole": "Hook & Perceptual Proof (S01-S06) — warm matte carbon with aged Kodak brass 10% focal accent",
+      "id": "ACT1_SAPPHIRE_COBALT_STUDIO",
+      "narrativeRole": "Worlds 1-7 — Deep cinema sapphire obsidian with electric cobalt light-sweeps & crisp studio white",
       "colors": {
-        "dominantBg": "#141311",
-        "secondarySurface": "#201E1B",
-        "primaryText": "#EDE7DA",
-        "heroAccent": "#C8963E"
+        "dominantBg": "#040A18",
+        "secondarySurface": "#0B1630",
+        "primaryText": "#F8FAFC",
+        "heroAccent": "#1D63ED"
       },
       "pixelRatio": {
         "dominant": 60,
@@ -17,32 +18,32 @@
       }
     },
     {
-      "id": "ACT2_TERRACOTTA_TENSION",
-      "narrativeRole": "Accelerating Rhythm & Riser Tension (S07-S08) — deep umber carbon with matte Braun terracotta pulse",
+      "id": "ACT2_HERO_LIME_PAYOFF",
+      "narrativeRole": "Shadow Discipline & Split-Face Lock — 90% deep shadow isolating 10% indicator lime payoff node",
       "colors": {
-        "dominantBg": "#151311",
-        "secondarySurface": "#221E1B",
-        "primaryText": "#EDE7DA",
-        "heroAccent": "#D15B3E"
-      },
-      "pixelRatio": {
-        "dominant": 62,
-        "secondary": 28,
-        "accent": 10
-      }
-    },
-    {
-      "id": "ACT3_ARCHIVAL_PAPER_PAYOFF",
-      "narrativeRole": "Post-Silence Polarity Flip Climax (S09) — warm unbleached museum paper with carbon ink & terracotta emblem",
-      "colors": {
-        "dominantBg": "#EFE9DD",
-        "secondarySurface": "#E3DCCD",
-        "primaryText": "#181613",
-        "heroAccent": "#B8432A"
+        "dominantBg": "#040A18",
+        "secondarySurface": "#0B1630",
+        "primaryText": "#F8FAFC",
+        "heroAccent": "#84CC16"
       },
       "pixelRatio": {
         "dominant": 64,
         "secondary": 26,
+        "accent": 10
+      }
+    },
+    {
+      "id": "ACT3_DAYLIGHT_CYCLORAMA_FINALE",
+      "narrativeRole": "World 9 Post-Silence Reveal — Bright studio daylight cyclorama with deep obsidian ink & electric cobalt pill",
+      "colors": {
+        "dominantBg": "#F4F8FE",
+        "secondarySurface": "#E2ECFC",
+        "primaryText": "#0A1224",
+        "heroAccent": "#1D63ED"
+      },
+      "pixelRatio": {
+        "dominant": 62,
+        "secondary": 28,
         "accent": 10
       }
     }
