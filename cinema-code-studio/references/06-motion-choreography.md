@@ -53,8 +53,8 @@ High-craft commercial motion graphics require **heavy virtual camera movement** 
 1. **Recursive "World-Inside-World" Portal Zooms (`<PortalZoomStage>`)**:
    * Open full-bleed inside an inner subject (e.g., `initialScale={2.24}` on a `990×500` NLE preview window—remember to multiply inner center `(dx, dy)` by `initialScale` so `initialOffset = [-dx * initialScale, -dy * initialScale]` prevents any surrounding chrome bleed!).
    * On the beat, speed-ramp zoom out (`14–18 frames` at `25 fps` with `Easing.bezier(0.16, 1, 0.3, 1)` and velocity-proportional `blur(7px)` at mid-ramp) to reveal the full NLE editor, 3×3 cinema monitor wall, or 3D Studio Display!
-2. **Animated Corner Light-Sweeps & Connected Node Trees (`<GlowSweepFrame>` + `<OrthogonalNodeTree>`)**:
-   * Frame hero photography inside `<GlowSweepFrame showReticles>` (tracing a white-hot + cobalt highlight around rounded corners) and wire it via orthogonal SVG spines to frosted `<GlassNodeCard>` pills (`cobalt` → `dark` → `lime` hero payoff).
+2. **Animated Corner Light-Sweeps & Glass Callouts (`<GlowSweepFrame>` + `<GlassNodeCard>`)**:
+   * Frame hero photography inside `<GlowSweepFrame showReticles>` (tracing a white-hot + cobalt highlight around rounded corners) and place frosted `<GlassNodeCard>` pills beside it (`cobalt` → `dark` → `lime` hero payoff). Do not wire them together with orthogonal SVG spines: that reads as circuit-board decoration. `<OrthogonalNodeTree>` is deprecated.
 3. **Foreground Optical Ring-Light Wipes (`<BokehRingWipe>`)**:
    * Sweep an out-of-focus `1560px` foreground ring light (`filter: "blur(26px)"`) across major world transitions (`10–14 frames`), switching `<Sequence>` boundaries cleanly at peak ring occlusion.
 4. **Tactile Cursor Micro-Interactions (`<StudioCursor>`)**:

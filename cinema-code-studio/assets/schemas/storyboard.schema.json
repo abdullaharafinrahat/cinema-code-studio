@@ -4,11 +4,34 @@
   "title": "CinemaCodeStudioStoryboard",
   "description": "Gate 4 Master Storyboard encoding shot scale, composition grid, eye-trace coordinates, camera motivation, and cognitive load.",
   "type": "object",
-  "required": ["projectTitle", "aspectRatio", "fps", "shots"],
+  "required": [
+    "projectTitle",
+    "aspectRatio",
+    "fps",
+    "shots"
+  ],
   "properties": {
-    "projectTitle": { "type": "string" },
-    "aspectRatio": { "type": "string", "enum": ["16:9", "9:16", "1:1", "4:5"] },
-    "fps": { "type": "integer", "enum": [24, 25, 30, 60] },
+    "projectTitle": {
+      "type": "string"
+    },
+    "aspectRatio": {
+      "type": "string",
+      "enum": [
+        "16:9",
+        "9:16",
+        "1:1",
+        "4:5"
+      ]
+    },
+    "fps": {
+      "type": "integer",
+      "enum": [
+        24,
+        25,
+        30,
+        60
+      ]
+    },
     "shots": {
       "type": "array",
       "minItems": 1,
@@ -32,9 +55,18 @@
           "transitionOut"
         ],
         "properties": {
-          "shotId": { "type": "string", "pattern": "^S[0-9]{2,3}$" },
-          "startSec": { "type": "number", "minimum": 0 },
-          "endSec": { "type": "number", "exclusiveMinimum": 0 },
+          "shotId": {
+            "type": "string",
+            "pattern": "^S[0-9]{2,3}$"
+          },
+          "startSec": {
+            "type": "number",
+            "minimum": 0
+          },
+          "endSec": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
           "narrativeBeat": {
             "type": "string",
             "description": "Custom beat ID from 01a_edit_grammar.json scriptShape.beatSequence. Must NOT reuse the universal skeleton (HOOK/SETUP/TENSION/EVIDENCE/REHOOK/PAYOFF/CTA) unless customizing it.",
@@ -42,42 +74,89 @@
           },
           "shotScale": {
             "type": "string",
-            "enum": ["ECU", "CU", "MS", "WS", "EWS"]
+            "enum": [
+              "ECU",
+              "CU",
+              "MS",
+              "WS",
+              "EWS"
+            ]
           },
           "compositionGrid": {
             "type": "string",
-            "enum": ["CENTER_PUNCH", "RULE_OF_THIRDS", "ASYMMETRIC_EDITORIAL", "VERTICAL_SAFE_STACK"]
+            "enum": [
+              "CENTER_PUNCH",
+              "RULE_OF_THIRDS",
+              "ASYMMETRIC_EDITORIAL",
+              "VERTICAL_SAFE_STACK"
+            ]
           },
           "entryFocalPoint": {
             "type": "array",
             "minItems": 2,
             "maxItems": 2,
-            "items": { "type": "number", "minimum": 0, "maximum": 1 }
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
           },
           "exitFocalPoint": {
             "type": "array",
             "minItems": 2,
             "maxItems": 2,
-            "items": { "type": "number", "minimum": 0, "maximum": 1 }
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
           },
-          "colorMoodId": { "type": "string" },
+          "colorMoodId": {
+            "type": "string"
+          },
           "paletteHexPreview": {
             "type": "object",
             "properties": {
-              "bg": { "type": "string" },
-              "surface": { "type": "string" },
-              "hero": { "type": "string" },
-              "text": { "type": "string" }
+              "bg": {
+                "type": "string"
+              },
+              "surface": {
+                "type": "string"
+              },
+              "hero": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              }
             }
           },
-          "visualDescription": { "type": "string", "minLength": 5 },
-          "audioScript": { "type": "string" },
-          "onScreenWordCount": { "type": "integer", "minimum": 0 },
-          "cognitiveLoadScore": { "type": "integer", "minimum": 1, "maximum": 3 },
-          "captionsActive": { "type": "boolean" },
+          "visualDescription": {
+            "type": "string",
+            "minLength": 5
+          },
+          "audioScript": {
+            "type": "string"
+          },
+          "onScreenWordCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "cognitiveLoadScore": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "captionsActive": {
+            "type": "boolean"
+          },
           "cameraMove": {
             "type": "object",
-            "required": ["type", "motivation", "beatId"],
+            "required": [
+              "type",
+              "motivation",
+              "beatId"
+            ],
             "properties": {
               "type": {
                 "type": "string",
@@ -94,8 +173,14 @@
                   "TILT_AROUND_PORTAL"
                 ]
               },
-              "motivation": { "type": "string", "minLength": 3 },
-              "beatId": { "type": "string", "minLength": 3 }
+              "motivation": {
+                "type": "string",
+                "minLength": 3
+              },
+              "beatId": {
+                "type": "string",
+                "minLength": 3
+              }
             }
           },
           "editGrammarSignature": {
@@ -104,7 +189,10 @@
           },
           "transitionOut": {
             "type": "object",
-            "required": ["type", "durationFrames"],
+            "required": [
+              "type",
+              "durationFrames"
+            ],
             "properties": {
               "type": {
                 "type": "string",
@@ -121,8 +209,24 @@
                   "GLOW_SWEEP_FRAME"
                 ]
               },
-              "durationFrames": { "type": "integer", "minimum": 0, "maximum": 45 }
+              "durationFrames": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 45
+              }
             }
+          },
+          "recipeId": {
+            "type": "string",
+            "description": "Id from assets/recipes/recipes.json that this shot is built from, or \"CUSTOM\" with a recipeNote explaining why no library recipe fits."
+          },
+          "recipeParams": {
+            "type": "object",
+            "description": "Parameters for the recipe (labels, tones, steps). Copy must be specific to this script."
+          },
+          "recipeNote": {
+            "type": "string",
+            "description": "Required when recipeId is CUSTOM."
           }
         }
       }

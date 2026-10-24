@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Gate 8 Screening Room Contact-Sheet, Anti-Purple/Neon Audit & Grayscale Squint-Test Generator.
+Gate 9 Screening Room Contact-Sheet, Look Audit (violet band + circuit lines) & Grayscale Squint-Test Generator.
 Renders critical frames in a single fast Webpack bundle pass (`@remotion/bundler` + `@remotion/renderer`)
 and composites `qa-screening-sheet.png` with:
 1. Rule-of-thirds & 9:16/16:9 UI safe-zone danger overlays
-2. Per-frame dynamic range, white clipping, and HSV Purple/Violet contamination (`purplePct`)
+2. Per-frame dynamic range, white clipping, and violet-band share (`purplePct`, HSV 255-325 deg) and circuit-line share (`circuitPct`)
 3. A bottom miniature Grayscale "Squint Test" strip to verify single-hero focal hierarchy
 """
 
@@ -19,17 +19,21 @@ import tempfile
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageStat
 
+from look_audit import MAX_CIRCUIT_PCT, MAX_VIOLET_PCT
+
 
 def compute_purple_pct(rgb: Image.Image) -> float:
-    hsv = rgb.resize((240, 135), Image.Resampling.BILINEAR).convert("HSV")
-    raw = hsv.tobytes()
-    total = max(1, len(raw) // 3)
-    purple = 0
-    for i in range(0, len(raw), 3):
-        h, s, v = raw[i], raw[i + 1], raw[i + 2]
-        if 191 <= h <= 237 and s > 90 and v > 64:
-            purple += 1
-    return round((purple / total) * 100.0, 3)
+    """Violet-band share (HSV 255-325 deg). Red / pink-red / cobalt are intentionally not counted."""
+    from look_audit import _load, violet_pct
+
+    return round(violet_pct(_load(rgb)), 3)
+
+
+def compute_circuit_pct(rgb: Image.Image) -> float:
+    """Share of pixels in long thin axis-aligned bright lines (circuit / HUD decoration)."""
+    from look_audit import _load, circuit_pct
+
+    return round(circuit_pct(_load(rgb)), 3)
 
 
 def compute_critical_frames(timeline: dict, max_samples: int = 12) -> list[dict]:
@@ -159,7 +163,7 @@ def build_screening_sheet(
     )
     draw.text(
         (pad, 38),
-        "Cyan = Rule of Thirds   Purple Guard <= 0.25%   Bottom Row = 25% Grayscale Squint Test",
+        "Cyan = Rule of Thirds   Violet <= 1.5%   Circuit lines <= 1.6%   Bottom Row = 25% Grayscale Squint Test",
         fill=(148, 163, 184),
         font=font,
     )
@@ -176,6 +180,7 @@ def build_screening_sheet(
         total_px = max(1, rgb.width * rgb.height)
         clipped_white_pct = round((sum(hist[252:]) / total_px) * 100.0, 2)
         purple_pct = compute_purple_pct(rgb)
+        circuit_pct = compute_circuit_pct(rgb)
 
         frame_telemetry.append(
             {
@@ -184,6 +189,7 @@ def build_screening_sheet(
                 "contrastStd": std_luma,
                 "clippedWhitePct": clipped_white_pct,
                 "purplePct": purple_pct,
+                "circuitPct": circuit_pct,
             }
         )
 
@@ -214,10 +220,10 @@ def build_screening_sheet(
             fill=(248, 250, 252),
             font=font,
         )
-        warn_col = (248, 113, 113) if (purple_pct > 0.25 or std_luma < 0.04) else (148, 163, 184)
+        warn_col = (248, 113, 113) if (purple_pct > MAX_VIOLET_PCT or circuit_pct > MAX_CIRCUIT_PCT or std_luma < 0.04) else (148, 163, 184)
         draw.text(
             (x, y + thumb_h + 22),
-            f"Luma={mean_luma} Std={std_luma} Purple={purple_pct}%",
+            f"Luma={mean_luma} Std={std_luma} Violet={purple_pct}% Circuit={circuit_pct}%",
             fill=warn_col,
             font=font,
         )
@@ -246,9 +252,11 @@ def build_screening_sheet(
     out_png.parent.mkdir(parents=True, exist_ok=True)
     sheet.save(out_png, format="PNG")
     max_purple = max((t["purplePct"] for t in frame_telemetry), default=0.0)
+    max_circuit = max((t["circuitPct"] for t in frame_telemetry), default=0.0)
     return {
-        "status": "ok" if max_purple <= 0.25 else "purple_violation",
+        "status": "ok" if (max_purple <= MAX_VIOLET_PCT and max_circuit <= MAX_CIRCUIT_PCT) else "look_violation",
         "maxPurplePct": max_purple,
+        "maxCircuitPct": max_circuit,
         "screeningSheet": str(out_png),
         "framesEvaluated": frame_telemetry,
     }

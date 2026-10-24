@@ -6,6 +6,22 @@ A full-craft programmatic video editing, mixed-media compositing, cinematography
 
 ---
 
+
+## v5 — Quality Layer (what changed and why)
+
+The aim of v5 is a higher, steadier quality floor, modelled on a real Bengali course promo (cobalt/lime/daylight, talking head plus graphics).
+
+- **Ban the look, not the hue.** The old pixel guard flagged a wide hue band, which also fired on legitimate UI colors (pink timeline clips, a red "mistake" label). `scripts/look_audit.py` now measures only the violet band and circuit-line decoration, calibrated on 141 frames of the reference (max violet 1.27%, max circuit 1.30%) and on synthetic bad frames. Glow and neon gradients are not measured by code; they are on the human rubric in `references/09-screening-room-critic.md`.
+- **Semantic colors.** `colors.semantic` (success lime, error red, warning amber, info cobalt, neutral) with hue-lane validation, so "wrong / right" cues are legal but cannot drift into magenta.
+- **Recipe library.** `assets/recipes/recipes.json` + `references/10-recipe-library.md` + `scripts/audit_recipes.py`. Five recipes are implemented in `src/recipes/` and render from the timeline (`kind: "RECIPE"`). Four are spec-only and say so.
+- **Face-safe overlays.** `auto_reframe_eyes.py` now exports `dominantFaceBox`; `placePills` keeps overlays off the face (property-tested over 120 placements).
+- **Bengali / non-Latin text.** A Hind Siliguri stack and `fontFor()` / `lineHeightFor()` in `src/fonts.ts`.
+- **Lean path and draft render** for short pieces (`npm run draft`), plus an ask-vs-assume rule.
+- **Circuit decoration deprecated.** `OrthogonalNodeTree` is marked `@deprecated`.
+- **Laws relaxed where they fought each other** (layer count vs negative space, frozen objects vs deliberate rest, frame 0).
+
+Not done yet: speaker matting (text behind the speaker), automatic glow detection, a talking-head draft with real Bengali audio, and a full end-to-end render in CI. See `references/10-recipe-library.md` for the spec-only recipes.
+
 ## What's New in v4.0 (`COMMERCIAL_MIXED_MEDIA` Architecture)
 
 - **Modernized Remotion 4.0.538 + React 19 Engine**: Preloaded `@remotion/google-fonts` (`Space Grotesk` + `Instrument Serif`) preventing headless Linux font fallbacks, `@remotion/motion-blur`, `@remotion/paths`, `@remotion/shapes`, and single-bundle batch still rendering in `qa_screening_room.py` (~10× faster QA).
@@ -13,14 +29,14 @@ A full-craft programmatic video editing, mixed-media compositing, cinematography
 - **Commercial Mixed-Media Primitives (`src/commercial/CommercialPrimitives.tsx`)**:
   - `PortalZoomStage` — Recursive "World-Inside-World" speed-ramp zoom-outs (`25 fps`) with velocity-proportional Gaussian blur and 3D perspective tilts.
   - `GlowSweepFrame` — Animated perimeter corner light-sweep viewports with architectural `+` reticles.
-  - `GlassNodeCard` & `OrthogonalNodeTree` — Frosted-glass callout hierarchies (`cobalt` / `dark` / `lime` / `white`) connected via orthogonal SVG circuit spines.
+  - `GlassNodeCard` — Frosted-glass callouts (`cobalt` / `dark` / `lime` / `white`). (`OrthogonalNodeTree`, which drew circuit-style spines, is deprecated in v5.)
   - `SplitMatchViewport` — Pupil- and nose-bridge-calibrated (`transformOrigin: "50% 37%"`) split-portrait match-cut stage.
   - `StudioCursor` — Tactile commercial vector pointer with spring click-bounce and ripple ring.
   - `BokehRingWipe` & `CobaltStudioBackdrop` — Foreground blurred studio ring-light lens transitions and high-contrast sapphire (`#040A18`) / daylight cyclorama (`#F8FAFC`) environments.
 - **Dual Zero-Purple / Zero-Neon Studio Color Profiles (`validate_color_script.py`)**:
   - `commercial_cobalt` — Deep cinema sapphire (`#040A18`), electric cobalt (`#1D63ED`), studio daylight (`#F8FAFC`), and tactile indicator lime (`#84CC16`).
   - `analog_editorial` — Warm matte carbon (`#141311`), archival silver-gelatin bone (`#EFE9DD`), aged Kodak brass (`#C8963E`), and Braun terracotta (`#C84B31`).
-  - **Both profiles mathematically forbid all purple/violet/magenta (`275°–350°`) and raw neon lasers (`maxPurplePct <= 0.25%`).**
+  - **Both profiles forbid violet/magenta palette colors (`275°–350°`) and raw neon lasers; v5 adds semantic red/lime roles and a calibrated look audit (see v5 section).**
 
 ---
 

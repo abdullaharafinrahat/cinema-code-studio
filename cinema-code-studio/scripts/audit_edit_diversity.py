@@ -145,12 +145,13 @@ def check_component_reuse(timeline: dict, errors: list[str], warnings: list[str]
     seen_pairs: dict[str, str] = {}
     for s in scenes:
         arch = s.get("archetype")
-        if not arch:
+        recipe = s.get("recipe")
+        if not arch and not recipe:
             continue
-        key = json.dumps({"archetype": arch, "props": s.get("props", {})}, sort_keys=True)
+        key = json.dumps({"archetype": arch, "props": s.get("props", {}), "recipe": recipe}, sort_keys=True)
         if key in seen_pairs:
             errors.append(
-                f"Scene '{s.get('id', '?')}' repeats the exact archetype+props of scene '{seen_pairs[key]}'. "
+                f"Scene '{s.get('id', '?')}' repeats the exact archetype/recipe+props of scene '{seen_pairs[key]}'. "
                 "Copy-pasted scenes are not allowed — change the props so the beat has its own content."
             )
         else:

@@ -48,8 +48,8 @@ Every shot in `04_storyboard.json` must carry `editGrammarSignature` matching th
 Amateur AI videos fail because Scene 1 looks like dark cyberpunk, Scene 2 uses corporate flat icons, and Scene 3 looks like a pastel Notion doc. Lock **one** visual world for the entire runtime:
 
 ### Archetype 0 (Flagship Commercial): `COMMERCIAL_MIXED_MEDIA` (`25 fps`)
-* **Atmosphere**: Deep cinema sapphire/obsidian (`#040A18`) paired with high-contrast studio daylight cycloramas (`#F8FAFC`), electric cinema cobalt (`#1D63ED`), and tactile indicator lime (`#84CC16`) — **strictly 0% purple/violet and 0% raw neon**.
-* **5–8 Mixed-Media Layers Per Shot**: Real verified photography & cutouts, authentic brand/software vector SVGs (`React`, `TypeScript`, `FFmpeg`, `DaVinci`, `GitHub`, `Apple`), tactile NLE/CLI product chrome, `<GlowSweepFrame>` animated perimeter corner light-sweeps, `<OrthogonalNodeTree>` frosted glass callouts, `<StudioCursor>` micro-interactions, and `<BokehRingWipe>` foreground blurred ring-light transitions.
+* **Atmosphere**: Deep cinema sapphire/obsidian (`#040A18`) paired with high-contrast studio daylight cycloramas (`#F8FAFC`), electric cinema cobalt (`#1D63ED`), and tactile indicator lime (`#84CC16`) — **no violet/magenta, no neon lasers**; red and lime are allowed as meaning colors (wrong / right).
+* **3–6 Real Layers Per Shot, One Hero**: Real verified photography & cutouts, authentic brand/software vector SVGs, real or faithfully rebuilt product UI, `<GlowSweepFrame>` perimeter light-sweeps, frosted `<GlassNodeCard>` callouts, `<StudioCursor>` micro-interactions, and `<BokehRingWipe>` foreground blurred ring-light transitions. Shots are built from library recipes (`10-recipe-library.md`). No circuit traces, no HUD decoration, no neon glow.
 * **Camera Character**: Heavy continuous virtual camera movement at `25 fps` — recursive `<PortalZoomStage>` "World-Inside-World" zoom-outs with velocity blur, 3D perspective tilts (`rotateY(-13deg) rotateX(6deg)`), and rapid saccade whip-pans. Zero parked/static objects.
 * **Best For**: High-craft product commercials, dev-tool launches, SaaS hero films, flagship explainers.
 
@@ -119,5 +119,5 @@ Lev Kuleshov proved that meaning arises from the **collision between audio and v
 2. **Two-Font Ceiling**: Select `displayFont` (e.g. `Space Grotesk` 700) and `editorialFont` (e.g. `Instrument Serif` Regular/Italic). Never introduce a third font.
 2. **Three-Size Ceiling Per Frame**: Any single frame may contain at most **Hero Display**, **Supporting Subhead**, and **Micro Metadata/Label**.
 3. **Tabular Numerals Mandatory**: Every animated counter, timestamp, currency, or chart axis must set `fontVariantNumeric: "tabular-nums"` so digits never jitter horizontally while counting.
-4. **Negative Space Floor**: At least **40% of frame area** in motion-graphic scenes must remain uncluttered background/atmosphere. Crowded frames look cheap and destroy retention.
+4. **Hero-First Space**: Every frame has one hero and calm space around it. Title cards and data scenes keep at least **40%** open canvas. Dense burst shots (phone + floating cards, UI stacks) may go lower for up to about 2.5 s if the hero stays obvious in the grayscale squint test. Crowded frames with no hero look cheap.
 5. **Aspect-Ratio Native Design**: Never shrink a `16:9` layout inside black letterbox bars to make a `9:16` vertical video. Re-stack spatial hierarchy vertically inside safe zones (`top >= 12%`, `bottom >= 22%`, `right >= 14%` on `9:16` to clear platform UI icons).

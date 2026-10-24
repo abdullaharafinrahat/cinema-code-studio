@@ -20,6 +20,20 @@ export interface FootageSpec {
   anchorEye?: [number, number];
   jCutLeadFrames?: number;
   lCutTrailFrames?: number;
+  /** Speaker face box [x, y, w, h], normalized 0..1 (from eyes.json `dominantFaceBox`). Recipes keep overlays off it. */
+  faceBox?: [number, number, number, number];
+}
+
+export type RecipeId =
+  | "SPEAKER_ORBIT_PILLS"
+  | "STEP_LABELS"
+  | "WRONG_RIGHT_CARDS"
+  | "MINI_SPEAKER_FRAME"
+  | "TITLE_CARD";
+
+export interface RecipeSpec {
+  id: RecipeId;
+  params?: Record<string, unknown>;
 }
 
 export interface GradeMoodSpec {
@@ -50,9 +64,11 @@ export interface TimelineScene {
   id: string;
   shotId: string;
   durationInFrames: number;
-  kind: "FOOTAGE" | "MOTION_SCENE" | "HYBRID_COMPOSITE";
+  kind: "FOOTAGE" | "MOTION_SCENE" | "HYBRID_COMPOSITE" | "RECIPE";
   component?: string;
   archetype?: StageArchetype;
+  /** For kind "RECIPE": a library recipe from assets/recipes/recipes.json plus its params. */
+  recipe?: RecipeSpec;
   props?: Record<string, unknown>;
   footage?: FootageSpec;
   gradeMood?: GradeMoodSpec;

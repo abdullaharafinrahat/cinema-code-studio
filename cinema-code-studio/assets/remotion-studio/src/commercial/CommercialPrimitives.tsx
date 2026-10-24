@@ -251,7 +251,11 @@ export const GlassNodeCard: React.FC<{
 };
 
 /**
- * 3. Orthogonal Connected Node Tree (replaces flat SaaS 4-column card grids!).
+ * 3. Orthogonal Connected Node Tree.
+ *
+ * @deprecated v5: draws circuit-style orthogonal traces, which read as AI-default tech decoration.
+ * Prefer library recipes (assets/recipes/recipes.json) or GlassNodeCard beside real UI with no connecting spines.
+ * Kept only so older projects still render.
  */
 export const OrthogonalNodeTree: React.FC<{
   nodes: Array<{

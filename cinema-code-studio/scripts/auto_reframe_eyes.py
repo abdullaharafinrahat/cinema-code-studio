@@ -35,6 +35,15 @@ def critically_damped_smooth(points: list[tuple[float, float]], alpha: float = 0
     return [(round(x, 4), round(y, 4)) for x, y in bwd]
 
 
+def expand_face(fx: float, fy: float, fw: float, fh: float, w: int, h: int) -> list[float]:
+    """Haar boxes are tight (brow to chin). Grow to cover hair, ears and neck, normalized and clamped."""
+    x0 = max(0.0, fx - fw * 0.18)
+    y0 = max(0.0, fy - fh * 0.30)
+    x1 = min(float(w), fx + fw * 1.18)
+    y1 = min(float(h), fy + fh * 1.35)
+    return [round(x0 / w, 4), round(y0 / h, 4), round((x1 - x0) / w, 4), round((y1 - y0) / h, 4)]
+
+
 def detect_eyes_opencv(video_path: Path, sample_every: int = 3) -> tuple[float, list[dict]]:
     import cv2  # type: ignore
 
@@ -48,6 +57,8 @@ def detect_eyes_opencv(video_path: Path, sample_every: int = 3) -> tuple[float, 
     raw_coords: list[tuple[float, float]] = []
     frame_indices: list[int] = []
     last_known = (0.50, 0.36)
+    last_face: list[float] | None = None
+    face_boxes: list[list[float] | None] = []
     idx = 0
 
     while True:
@@ -65,6 +76,8 @@ def detect_eyes_opencv(video_path: Path, sample_every: int = 3) -> tuple[float, 
                 ex = (fx + fw * 0.5) / max(1, w)
                 ey = (fy + fh * 0.38) / max(1, h)
                 last_known = (ex, ey)
+                last_face = expand_face(fx, fy, fw, fh, w, h)
+            face_boxes.append(last_face)
             raw_coords.append(last_known)
             frame_indices.append(idx)
         idx += 1
@@ -78,8 +91,9 @@ def detect_eyes_opencv(video_path: Path, sample_every: int = 3) -> tuple[float, 
             "eyeX": sx,
             "eyeY": sy,
             "recommended9x16CropCenterX": min(0.82, max(0.18, sx)),
+            "faceBox": fb,
         }
-        for f_idx, (sx, sy) in zip(frame_indices, smoothed)
+        for f_idx, (sx, sy), fb in zip(frame_indices, smoothed, face_boxes)
     ]
     return fps, keyframes
 
@@ -108,8 +122,14 @@ def main() -> None:
     avg_x = round(sum(k["eyeX"] for k in keyframes) / max(1, len(keyframes)), 4)
     avg_y = round(sum(k["eyeY"] for k in keyframes) / max(1, len(keyframes)), 4)
 
+    boxes = [k["faceBox"] for k in keyframes if k.get("faceBox")]
+    dominant_box = (
+        [round(sorted(b[i] for b in boxes)[len(boxes) // 2], 4) for i in range(4)] if boxes else None
+    )
+
     payload = {
         "source": str(args.video_path),
+        "dominantFaceBox": dominant_box,  # [x, y, w, h] normalized; feeds FootageSpec.faceBox for recipes
         "fps": round(fps, 3),
         "dominantAnchorEye": [avg_x, avg_y],
         "keyframeCount": len(keyframes),

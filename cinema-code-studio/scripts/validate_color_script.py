@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """
 Gate 3 Perceptual Color Script & Anti-AI-Slop Validator (Bjorn Ottosson OKLCH Engine).
-Supports Cinema Code Studio's two approved pigment profiles — BOTH strictly banning purple/violet & neon AI-slop:
+Supports Cinema Code Studio's two approved pigment profiles — BOTH banning violet/magenta palette colors and neon lasers:
 1. `analog_editorial` (default): Warm matte carbon (#141311), silver-gelatin bone (#EFE9DD),
    aged brass (#C8963E), terracotta (#C84B31), sage (#6E8B6B), C <= 0.175.
 2. `commercial_cobalt`: Deep cinema sapphire (#040A18), crisp studio daylight (#F8FAFC),
    electric cinema cobalt (#1D63ED), and tactile indicator lime (#84CC16) — still strictly
    forbidding ALL purple/violet/magenta (275 <= H <= 350) and raw neon magenta/cyan lasers!
+
+v5: optional `colors.semantic` roles (success / error / warning / info / neutral). Red, amber and green
+meaning colors are ALLOWED when they sit in their own hue lane, because "wrong / right / careful" cues
+(a red "mistake" label, a lime check) are core motion-graphics vocabulary. Violet drift is still rejected.
 """
 
 from __future__ import annotations
@@ -50,6 +54,40 @@ def hex_to_oklch(hex_str: str) -> tuple[float, float, float]:
     C = math.sqrt(a * a + b_ok * b_ok)
     H = (math.degrees(math.atan2(b_ok, a)) + 360.0) % 360.0
     return round(L, 4), round(C, 4), round(H, 2)
+
+
+# OKLCH hue lanes for semantic roles. A role color outside its lane is rejected so that
+# "error" cannot quietly become magenta and "success" cannot become cyan neon.
+SEMANTIC_LANES = {
+    "error": (10.0, 40.0),
+    "warning": (60.0, 95.0),
+    "success": (115.0, 160.0),
+    "info": (235.0, 270.0),
+}
+SEMANTIC_MIN_C = 0.08  # below this a "meaning" color reads as gray
+
+
+def check_semantic_roles(mood_id: str, semantic: dict, profile: str) -> list[str]:
+    errs: list[str] = []
+    ceiling = 0.245 if profile == "commercial_cobalt" else 0.175
+    for role, hex_val in semantic.items():
+        if role == "neutral":
+            L, C, H = hex_to_oklch(hex_val)
+            if C > 0.04:
+                errs.append(f"[{mood_id}] semantic `neutral` ({hex_val}, C={C}) must be near-gray (C <= 0.04).")
+            continue
+        if role not in SEMANTIC_LANES:
+            errs.append(f"[{mood_id}] unknown semantic role `{role}` (allowed: {', '.join(sorted(SEMANTIC_LANES))}, neutral).")
+            continue
+        L, C, H = hex_to_oklch(hex_val)
+        lo, hi = SEMANTIC_LANES[role]
+        if not (lo <= H <= hi):
+            errs.append(f"[{mood_id}] semantic `{role}` ({hex_val}, H={H}) is outside its hue lane {lo}-{hi} deg.")
+        if C < SEMANTIC_MIN_C:
+            errs.append(f"[{mood_id}] semantic `{role}` ({hex_val}, C={C}) is too gray to read as a meaning color (C >= {SEMANTIC_MIN_C}).")
+        if C > ceiling:
+            errs.append(f"[{mood_id}] semantic `{role}` ({hex_val}, C={C}) exceeds the {profile} chroma ceiling ({ceiling}).")
+    return errs
 
 
 def check_anti_ai_slop(
@@ -124,6 +162,13 @@ def validate_palette_mood(
     if not allow_neon:
         for k, (L_v, C_v, H_v) in parsed.items():
             errors.extend(check_anti_ai_slop(mood_id, k, colors[k], L_v, C_v, H_v, profile))
+
+    semantic = colors.get("semantic")
+    if semantic is not None:
+        if not isinstance(semantic, dict):
+            errors.append(f"[{mood_id}] `colors.semantic` must be an object of role -> hex.")
+        else:
+            errors.extend(check_semantic_roles(mood_id, semantic, profile))
 
     max_white = 0.992 if profile == "commercial_cobalt" else 0.985
     min_black = 0.025 if profile == "commercial_cobalt" else 0.05

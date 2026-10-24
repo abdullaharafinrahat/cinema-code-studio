@@ -1,0 +1,133 @@
+{
+  "version": "1.0.0",
+  "source": "Shot patterns observed in a reference Bengali course promo (cobalt/lime/daylight palette, talking head + graphics).",
+  "rules": {
+    "maxShareOfAnyOneRecipe": 0.35,
+    "maxConsecutiveSameRecipe": 1,
+    "minDistinctRecipesPerMinute": 3,
+    "mustVaryPerScript": ["copy", "placement or order", "tone assignment"]
+  },
+  "recipes": [
+    {
+      "id": "SPEAKER_ORBIT_PILLS",
+      "status": "implemented",
+      "component": "src/recipes/SpeakerOrbitPills.tsx",
+      "useWhen": "The speaker lists 2-4 named things (qualities, tools, outcomes) while staying on camera.",
+      "needs": ["speaker footage", "faceBox (eyes.json dominantFaceBox) when the speaker is not centered"],
+      "params": {
+        "pills": "2-4 items: { text, tone? } where tone is cobalt | lime | white | red | dark",
+        "staggerFrames": "optional, <= 10"
+      },
+      "required": ["pills"],
+      "timing": "Whole entrance reads in <= 34 frames; hold 2.2-4.0 s; pills drift slowly while held.",
+      "sound": ["one soft-pop on the last pill, not one per pill"],
+      "forbidden": ["pills over the face", "more than 4 pills", "captions on the same shot"]
+    },
+    {
+      "id": "WRONG_RIGHT_CARDS",
+      "status": "implemented",
+      "component": "src/recipes/WrongRightCards.tsx",
+      "useWhen": "The script contrasts a common mistake with the better way ('not X, but Y').",
+      "needs": ["speaker footage or dark base"],
+      "params": {
+        "wrong": "1-4 short labels shown as red cards with an x",
+        "right": "optional 1-4 labels that replace them as lime cards with a check",
+        "flipAtFrame": "scene-local frame of the swap"
+      },
+      "required": ["wrong"],
+      "timing": "Wrong cards land on the spoken mistake; the swap lands on the correction word.",
+      "sound": ["micro-click on swap"],
+      "forbidden": ["red anywhere except the wrong cards and error states", "both sets visible at once"]
+    },
+    {
+      "id": "STEP_LABELS",
+      "status": "implemented",
+      "component": "src/recipes/StepLabels.tsx",
+      "useWhen": "A path or sequence of 2-4 stages (foundation, advanced, professional).",
+      "needs": [],
+      "params": {
+        "steps": "2-4 items: { label }",
+        "holdFrames": "frames per active step",
+        "eyebrow": "optional small heading"
+      },
+      "required": ["steps"],
+      "timing": "One step revealed per spoken stage; earlier steps dim to 45%.",
+      "sound": ["soft-pop per step is allowed here because each step is a new idea"],
+      "forbidden": ["connector lines or circuit paths between steps", "more than 4 steps"]
+    },
+    {
+      "id": "MINI_SPEAKER_FRAME",
+      "status": "implemented",
+      "component": "src/recipes/MiniSpeakerFrame.tsx",
+      "useWhen": "A chapter or section moment: 'module 3', 'top 1% editor'. Gives the eye a rest from busy shots.",
+      "needs": ["speaker footage"],
+      "params": { "chip": "one short label" },
+      "required": ["chip"],
+      "timing": "1.5-3.0 s.",
+      "sound": ["airy-whoosh into it"],
+      "forbidden": ["more than one chip", "using it twice in a row"]
+    },
+    {
+      "id": "TITLE_CARD",
+      "status": "implemented",
+      "component": "src/recipes/TitleCard.tsx",
+      "useWhen": "A claim, offer name, or key phrase that deserves the whole screen.",
+      "needs": [],
+      "params": {
+        "lines": "1-3 lines",
+        "accentLine": "index of the one line with the accent block",
+        "tone": "dark | light",
+        "eyebrow": "optional"
+      },
+      "required": ["lines"],
+      "timing": "1.8-3.2 s; lines reveal through masks 5 frames apart.",
+      "sound": ["sub-impact on the accent line"],
+      "forbidden": ["more than 3 lines", "more than one accent", "words that only repeat the voiceover with no added emphasis"]
+    },
+    {
+      "id": "PHONE_FLOAT_CARDS",
+      "status": "spec_only",
+      "useWhen": "The script is about money, apps, or something people do on a phone.",
+      "needs": ["a real or faithfully rebuilt app screen", "2-4 floating cards that echo the spoken benefit"],
+      "params": { "screen": "asset path", "cards": "2-4 items: { text, tone? }" },
+      "required": ["screen", "cards"],
+      "timing": "Phone enters with a slow 3D tilt; cards stagger in around it.",
+      "sound": ["soft-pop on the first card only"],
+      "forbidden": ["invented bank balances presented as real", "glow around the phone"]
+    },
+    {
+      "id": "UI_STACK",
+      "status": "spec_only",
+      "useWhen": "Showing a product or workflow as layered app windows.",
+      "needs": ["2-4 real or rebuilt UI screens"],
+      "params": { "screens": "2-4 asset paths", "focusOrder": "which screen takes focus, in order" },
+      "required": ["screens"],
+      "timing": "Camera pushes through the stack; one window is sharp at a time.",
+      "sound": ["airy-whoosh per focus change, minimum 1.5 s apart"],
+      "forbidden": ["fake HUD text", "thin tech lines connecting windows"]
+    },
+    {
+      "id": "PORTAL_ZOOM_OUT",
+      "status": "spec_only",
+      "useWhen": "Revealing the bigger picture: from a detail to the full setup or product.",
+      "needs": ["a clean inner screen", "an outer context image (studio, desk, device)"],
+      "params": { "inner": "asset path", "outer": "asset path", "rampFrames": "14-18" },
+      "required": ["inner", "outer"],
+      "timing": "Speed-ramp zoom-out over 14-18 frames with velocity blur only at the peak.",
+      "sound": ["airy-whoosh peak on the cut center"],
+      "forbidden": ["surrounding chrome visible on the first frame", "more than two nested levels"],
+      "buildWith": "PortalZoomStage in src/commercial/CommercialPrimitives.tsx"
+    },
+    {
+      "id": "SPEAKER_CUTOUT_TEXT_BEHIND",
+      "status": "spec_only",
+      "useWhen": "A key phrase should sit behind the speaker to create depth.",
+      "needs": ["a speaker matte (alpha video or mask) from a segmentation step"],
+      "params": { "text": "1-3 words", "matte": "asset path" },
+      "required": ["text", "matte"],
+      "timing": "Text slides in behind the speaker; speaker gets a thin white outline.",
+      "sound": ["sub-impact on text lock"],
+      "forbidden": ["running without a matte (fall back to SPEAKER_ORBIT_PILLS)"]
+    }
+  ]
+}

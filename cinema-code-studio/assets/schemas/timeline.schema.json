@@ -52,10 +52,19 @@
           "durationInFrames": { "type": "integer", "minimum": 12 },
           "kind": {
             "type": "string",
-            "enum": ["FOOTAGE", "MOTION_SCENE", "HYBRID_COMPOSITE"]
+            "enum": ["FOOTAGE", "MOTION_SCENE", "HYBRID_COMPOSITE", "RECIPE"]
           },
           "component": { "type": "string" },
           "props": { "type": "object" },
+          "recipe": {
+            "type": "object",
+            "description": "For kind RECIPE: an id from assets/recipes/recipes.json plus its params.",
+            "required": ["id"],
+            "properties": {
+              "id": { "type": "string" },
+              "params": { "type": "object" }
+            }
+          },
           "footage": {
             "type": "object",
             "properties": {
@@ -69,7 +78,14 @@
                 "items": { "type": "number" }
               },
               "jCutLeadFrames": { "type": "integer", "default": 0 },
-              "lCutTrailFrames": { "type": "integer", "default": 0 }
+              "lCutTrailFrames": { "type": "integer", "default": 0 },
+              "faceBox": {
+                "type": "array",
+                "description": "Speaker face box [x, y, w, h], normalized 0..1 (eyes.json dominantFaceBox). Recipes keep overlays off it.",
+                "minItems": 4,
+                "maxItems": 4,
+                "items": { "type": "number", "minimum": 0, "maximum": 1 }
+              }
             }
           },
           "gradeMood": {

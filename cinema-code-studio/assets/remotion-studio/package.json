@@ -1,13 +1,14 @@
 {
   "name": "cinema-code-studio-remotion",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "private": true,
-  "description": "Commercial Mixed-Media & Deterministic Post-Production Studio powered by Remotion 4.0.538 + React 19",
+  "description": "Recipe-Driven Commercial Mixed-Media & Deterministic Post-Production Studio powered by Remotion 4.0.538 + React 19",
   "scripts": {
     "studio": "remotion studio",
     "render": "remotion render MasterSequence ../out/picture.mp4 --codec=h264 --crf=17 --pixel-format=yuv420p",
     "render:alpha": "remotion render MasterSequence ../out/overlay-alpha.mov --codec=prores --prores-profile=4444 --image-format=png --pixel-format=yuva444p10le",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "draft": "remotion render MasterSequence ../out/draft.mp4 --codec=h264 --crf=30 --scale=0.4 --pixel-format=yuv420p --concurrency=100%"
   },
   "dependencies": {
     "@remotion/cli": "4.0.538",

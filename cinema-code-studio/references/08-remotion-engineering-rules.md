@@ -60,7 +60,7 @@ npx remotion still MasterSequence ../preprod/check-frame.png --frame=45
 ```bash
 npx remotion render MasterSequence ../out/picture.mp4 \
   --codec=h264 \
-  --crf=18 \
+  --crf=17 \
   --pixel-format=yuv420p \
   --jpeg-quality=92
 ```

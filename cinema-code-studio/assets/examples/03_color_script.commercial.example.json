@@ -1,0 +1,24 @@
+{
+  "projectTitle": "Commercial Cobalt With Semantic Roles",
+  "studioProfile": "commercial_cobalt",
+  "moods": [
+    {
+      "id": "ACT1_COBALT_STUDIO",
+      "narrativeRole": "Hook & proof: deep sapphire base, cobalt hero, daylight cards, red for 'wrong', lime for 'right'",
+      "colors": {
+        "dominantBg": "#040A18",
+        "secondarySurface": "#0B1630",
+        "primaryText": "#F8FAFC",
+        "heroAccent": "#1D63ED",
+        "semantic": {
+          "success": "#84CC16",
+          "error": "#E5484D",
+          "warning": "#F5A524",
+          "info": "#1D63ED",
+          "neutral": "#8A93A6"
+        }
+      },
+      "pixelRatio": { "dominant": 60, "secondary": 30, "accent": 10 }
+    }
+  ]
+}

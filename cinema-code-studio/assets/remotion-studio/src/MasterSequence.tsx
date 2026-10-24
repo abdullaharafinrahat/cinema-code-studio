@@ -11,6 +11,7 @@ import { CameraRig25D } from "./primitives/CameraRig25D";
 import { FootageCut } from "./primitives/FootageCut";
 import { VisualMetaphorStage } from "./primitives/VisualMetaphorStage";
 import { EditorialCaptions } from "./primitives/EditorialCaptions";
+import { RecipeStage } from "./recipes/RecipeStage";
 
 export type MasterSequenceProps = {
   timeline: MasterTimelineData;
@@ -27,7 +28,9 @@ const SceneRenderer: React.FC<{
   return (
     <ColorGradeLayer mood={scene.gradeMood}>
       <CameraRig25D>
-        {scene.kind === "FOOTAGE" && scene.footage ? (
+        {scene.kind === "RECIPE" ? (
+          <RecipeStage scene={scene} palette={palette} />
+        ) : scene.kind === "FOOTAGE" && scene.footage ? (
           <FootageCut footage={scene.footage} />
         ) : scene.kind === "HYBRID_COMPOSITE" && scene.footage ? (
           <AbsoluteFill>
